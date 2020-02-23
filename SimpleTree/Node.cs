@@ -91,11 +91,17 @@ namespace GeneralTree
             }
         }
 
+        public void RemoveParent()
+        {
+            Parent.RemoveChild(this);
+            IsRoot = true;
+        }
+
         public void AddChild(Node child)
         {
             _log.Debug($"Adding {this} as parent to {child}");
             Children.Add(child);
-
+            AddDescendant(child);
             if (IsLeaf)
             {
                 _log.Trace($"Setting {this}.IsLeaf to \"false\"");
@@ -111,23 +117,39 @@ namespace GeneralTree
             child.RedeterminePaths();
         }
 
-        public void RemoveParent()
-        {
-            IsRoot = true;
-        }
-
         public void RemoveChild(Node child)
         {
             for (int i = 0; i < child.Leaves.Count; i++)
             {
                 RemoveLeaf(Leaves[i]);
             }
+            RemoveDescendant(child);
             child.Parent = null;
             Children.Remove(child);
             child.RedeterminePaths();
             if (Children.Count == 0)
             {
                 IsLeaf = true;
+            }
+        }
+
+        protected void AddDescendant(Node descendant)
+        {
+            _log.Debug($"Adding {descendant} to {this}'s list of descentants");
+            Descendants.Add(descendant);
+            if (Parent != null)
+            {
+                Parent.AddDescendant(descendant);
+            }
+        }
+
+        protected void RemoveDescendant(Node descendant)
+        {
+            _log.Debug($"Removing {descendant} from {this}'s list of descentants");
+            Descendants.Remove(descendant);
+            if (Parent != null)
+            {
+                Parent.RemoveDescendant(descendant);
             }
         }
 
