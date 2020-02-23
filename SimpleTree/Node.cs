@@ -1,0 +1,205 @@
+﻿using NLog;
+using System;
+using System.Collections.Generic;
+
+namespace GeneralTree
+{
+    public class Node
+    {
+        private readonly Logger _log = LogManager.GetCurrentClassLogger();
+
+        private bool _isLeaf;
+        
+        public string Id { get; protected set; }
+
+        public Node Parent { get; protected set; }
+
+        public List<Node> Children { get; protected set; } = new List<Node>();
+
+        public bool IsRoot { get; protected set; }
+
+        public bool IsLeaf
+        {
+            get
+            {
+                return _isLeaf;
+            }
+            protected set
+            {
+                if (_isLeaf != value)
+                {
+                    _isLeaf = value;
+                    if (_isLeaf)
+                    {
+                        _log.Trace($"{this} is now a leaf");
+                        AddLeaf(this);
+                    }
+                    else
+                    {
+                        _log.Trace($"{this} is no longer a leaf");
+                        RemoveLeaf(this);
+                    }
+                }
+            }
+        }
+
+        public Node Root { get; protected set; }
+
+        public List<Node> Leaves { get; protected set; } = new List<Node>();
+
+        public List<Node> Descendants { get; protected set; } = new List<Node>();
+
+        public List<Node> Path { get ; protected set; } = new List<Node>();
+
+        public Node(string id)
+        {
+            Id = id;
+            Parent = null;
+            Children = new List<Node>();
+            IsRoot = true;
+            IsLeaf = true;
+            Root = this;
+            Leaves = new List<Node>() { this };
+            Descendants = new List<Node>();
+            
+            Path.Add(this);
+        }
+
+        public Node(string id, Node parent)
+        {
+            Id = id;
+            Parent = parent;
+            IsRoot = false;
+            IsLeaf = true;
+            Root = this;
+            Descendants = new List<Node>() { this };
+
+            if (Parent.IsLeaf)
+                Parent.IsLeaf = false;
+
+            AddParent(parent);
+        }
+
+        public void AddParent(Node parent)
+        {
+            parent.AddChild(this);
+            
+            if (IsRoot)
+            {
+                _log.Trace($"Setting {this}.IsRoot to \"false\"");
+                IsRoot = false;
+            }
+        }
+
+        public void AddChild(Node child)
+        {
+            _log.Debug($"Adding {this} as parent to {child}");
+            Children.Add(child);
+
+            if (IsLeaf)
+            {
+                _log.Trace($"Setting {this}.IsLeaf to \"false\"");
+                IsLeaf = false;
+            }
+
+            if (child.IsRoot)
+            {
+                _log.Trace($"Setting {this}.IsRoot to \"false\"");
+                child.IsRoot = false;
+            }
+
+            child.RedeterminePaths();
+        }
+
+        public void RemoveParent()
+        {
+            IsRoot = true;
+        }
+
+        public void RemoveChild(Node child)
+        {
+            for (int i = 0; i < child.Leaves.Count; i++)
+            {
+                RemoveLeaf(Leaves[i]);
+            }
+            child.Parent = null;
+            Children.Remove(child);
+            child.RedeterminePaths();
+            if (Children.Count == 0)
+            {
+                IsLeaf = true;
+            }
+        }
+
+        protected void AddLeaf(Node leaf)
+        {
+            _log.Debug($"Adding {leaf} to {this}'s list of leaves");
+            Leaves.Add(leaf);
+            if (Parent != null)
+            {
+                Parent.AddLeaf(leaf);
+            }
+        }
+
+        protected void RemoveLeaf(Node leaf)
+        {
+            _log.Debug($"Removing {leaf} from {this}'s list of leaves");
+            Leaves.Remove(leaf);
+            if (Parent != null)
+            {
+                Parent.RemoveLeaf(leaf);
+            }
+        }
+
+        protected void RedeterminePaths()
+        {
+            _log.Debug($"Re-determining {this}'s paths");
+            if (Parent != null)
+            {
+                Path = new List<Node>(Parent.Path);
+                Path.Add(this);
+            }
+            else
+            {
+                Path = new List<Node>() { this };
+            }
+            if (!IsLeaf)
+            {
+                for (int i=0; i < Children.Count; i++)
+                {
+                    Children[i].RedeterminePaths();
+                }
+            }
+        }
+
+        public override string ToString() => Id;
+
+        public void PrintPretty(string indent, bool last)
+        {
+            Console.Write(indent);
+            if (last)
+            {
+                Console.Write("\\-");
+                indent += "  ";
+            }
+            else
+            {
+                Console.Write("|-");
+                indent += "| ";
+            }
+            Console.WriteLine(Id);
+
+            for (int i = 0; i < Children.Count; i++)
+                Children[i].PrintPretty(indent, i == Children.Count - 1);
+        }
+
+        public void PrintPath()
+        {
+            for (int i=0; i < Path.Count; i++)
+            {
+                Console.Write($"---> {Path[i]} ");
+            }
+            Console.WriteLine("");
+        }
+    }
+}
