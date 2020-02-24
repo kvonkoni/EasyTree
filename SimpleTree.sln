@@ -10,6 +10,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{161A765B-96B2-4302-8016-F8EAE0A099E4}"
 	ProjectSection(SolutionItems) = preProject
 		LICENSE.txt = LICENSE.txt
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTree.XUnitTests", "SimpleTree.XUnitTests\SimpleTree.XUnitTests.csproj", "{1B3E2138-A1D0-4576-BB8B-A9E8E6B84FBE}"
