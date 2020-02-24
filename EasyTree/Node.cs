@@ -45,7 +45,7 @@ namespace EasyTree
 
         public List<Node> Path { get; protected set; } = new List<Node>();
 
-        public HashSet<Node> Children { get; protected set; } = new HashSet<Node>();
+        public List<Node> Children { get; protected set; } = new List<Node>();
 
         public HashSet<Node> Leaves { get; protected set; } = new HashSet<Node>();
 
@@ -193,10 +193,9 @@ namespace EasyTree
             }
             if (!IsLeaf)
             {
-                HashSet<Node>.Enumerator cEnum = Children.GetEnumerator();
-                while (cEnum.MoveNext())
+                foreach (Node child in Children)
                 {
-                    cEnum.Current.RedeterminePaths();
+                    child.RedeterminePaths();
                 }
             }
         }
