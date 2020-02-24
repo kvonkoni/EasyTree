@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE.txt = LICENSE.txt
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleTree.XUnitTests", "SimpleTree.XUnitTests\SimpleTree.XUnitTests.csproj", "{1B3E2138-A1D0-4576-BB8B-A9E8E6B84FBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,6 +28,10 @@ Global
 		{637E8001-41F3-43C2-9BCE-5D232BB57BC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{637E8001-41F3-43C2-9BCE-5D232BB57BC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{637E8001-41F3-43C2-9BCE-5D232BB57BC2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B3E2138-A1D0-4576-BB8B-A9E8E6B84FBE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B3E2138-A1D0-4576-BB8B-A9E8E6B84FBE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B3E2138-A1D0-4576-BB8B-A9E8E6B84FBE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B3E2138-A1D0-4576-BB8B-A9E8E6B84FBE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
