@@ -57,6 +57,7 @@ namespace SimpleTree
             Parent = null;
             IsRoot = true;
             IsLeaf = true;
+            Root = this;
             Path.Add(this);
         }
 
@@ -66,6 +67,7 @@ namespace SimpleTree
             Parent = parent;
             IsRoot = false;
             IsLeaf = true;
+            Root = Parent.Root;
             Path.Add(this);
             AddParent(parent);
         }
@@ -180,11 +182,13 @@ namespace SimpleTree
             _log.Debug($"Re-determining {this}'s paths");
             if (Parent != null)
             {
+                Root = Parent.Root;
                 Path = new List<Node>(Parent.Path);
                 Path.Add(this);
             }
             else
             {
+                Root = this;
                 Path = new List<Node>() { this };
             }
             if (!IsLeaf)
