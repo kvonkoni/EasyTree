@@ -58,9 +58,6 @@ namespace SimpleTree
             Children = new List<Node>();
             IsRoot = true;
             IsLeaf = true;
-            Root = this;
-            Leaves = new List<Node>() { this };
-            Descendants = new List<Node>();
             
             Path.Add(this);
         }
@@ -71,37 +68,18 @@ namespace SimpleTree
             Parent = parent;
             IsRoot = false;
             IsLeaf = true;
-            Root = this;
-            Descendants = new List<Node>() { this };
-
-            if (Parent.IsLeaf)
-                Parent.IsLeaf = false;
 
             AddParent(parent);
-        }
-
-        public void AddParent(Node parent)
-        {
-            parent.AddChild(this);
-            
-            if (IsRoot)
-            {
-                _log.Trace($"Setting {this}.IsRoot to \"false\"");
-                IsRoot = false;
-            }
-        }
-
-        public void RemoveParent()
-        {
-            Parent.RemoveChild(this);
-            IsRoot = true;
         }
 
         public void AddChild(Node child)
         {
             _log.Debug($"Adding {this} as parent to {child}");
+            
             Children.Add(child);
+            child.Parent = this;
             AddDescendant(child);
+            
             if (IsLeaf)
             {
                 _log.Trace($"Setting {this}.IsLeaf to \"false\"");
@@ -110,7 +88,7 @@ namespace SimpleTree
 
             if (child.IsRoot)
             {
-                _log.Trace($"Setting {this}.IsRoot to \"false\"");
+                _log.Trace($"Setting {child}.IsRoot to \"false\"");
                 child.IsRoot = false;
             }
 
@@ -123,14 +101,27 @@ namespace SimpleTree
             {
                 RemoveLeaf(Leaves[i]);
             }
+            
             RemoveDescendant(child);
             child.Parent = null;
             Children.Remove(child);
             child.RedeterminePaths();
+            
             if (Children.Count == 0)
             {
                 IsLeaf = true;
             }
+            child.IsRoot = true;
+        }
+
+        public void AddParent(Node parent)
+        {
+            parent.AddChild(this);
+        }
+
+        public void RemoveParent()
+        {
+            Parent.RemoveChild(this);
         }
 
         protected void AddDescendant(Node descendant)
