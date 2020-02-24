@@ -6,6 +6,12 @@
     <Authors>Kier von Konigslow</Authors>
     <Company />
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageProjectUrl>https://github.com/kvonkoni/SimpleTree</PackageProjectUrl>
+    <Copyright>Copyright 2020 Kier von Konigslow</Copyright>
+    <Description>SimpleTree is a project to create a base class for tree-like objects in C#. Inheriting from the Node class provides APIs for creating, managing, and navigating a tree.</Description>
+    <RepositoryUrl>https://github.com/kvonkoni/SimpleTree</RepositoryUrl>
+    <NeutralLanguage />
+    <PackageId>SimpleTree_kier_von_konigslow</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

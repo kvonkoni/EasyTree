@@ -1,6 +1,6 @@
 # SimpleTree
 
-SimpleTree is a project to create a tree-like objects in C#. The class is intended to provide a base for other custom tree-like objects.
+SimpleTree is a project to create a base class for tree-like objects in C#. Inheriting from the Node class provides APIs for creating, managing, and navigating a tree.
 
 ## Usage
 
