@@ -30,6 +30,8 @@ public void AddParent(Node parent);
 public void RemoveParent(Node parent);
 ```
 
+### Features
+
 Node objects also feature the following convenient read-only properties:
 ```
 // The node's parent
