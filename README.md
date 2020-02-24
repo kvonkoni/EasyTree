@@ -1,6 +1,6 @@
-# SimpleTree
+# EasyTree
 
-SimpleTree is a project to create a base class for tree-like objects in C#. Inheriting from the Node class provides APIs for creating, managing, and navigating a tree.
+EasyTree is a project to create a base class for tree-like objects in C#. Inheriting from the Node class provides APIs for creating, managing, and navigating a tree.
 
 ## Usage
 
@@ -73,7 +73,7 @@ You can either use the Node class directly or inherit from it to create your own
 You can find a minimum working example of a custom class here:
 
 ```cs
-using SimpleTree;
+using EasyTree;
 
 namespace CustomNamespace
 {

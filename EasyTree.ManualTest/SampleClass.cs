@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace SimpleTree.ManualTest
+namespace EasyTree.ManualTest
 {
     public class SampleClass : Node
     {

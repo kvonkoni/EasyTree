@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace SimpleTree
+namespace EasyTree
 {
     public class Node
     {

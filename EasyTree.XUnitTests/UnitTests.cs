@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Xunit;
 
-namespace SimpleTree.XUnitTests
+namespace EasyTree.XUnitTests
 {
     public class UnitTests
     {

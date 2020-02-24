@@ -1,7 +1,7 @@
 ﻿using NLog;
 using System;
 
-namespace SimpleTree.ManualTest
+namespace EasyTree.ManualTest
 {
     class Program
     {

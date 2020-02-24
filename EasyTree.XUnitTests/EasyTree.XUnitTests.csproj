@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SimpleTree\SimpleTree.csproj" />
+    <ProjectReference Include="..\EasyTree\EasyTree.csproj" />
   </ItemGroup>
 
 </Project>
