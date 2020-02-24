@@ -9,58 +9,58 @@ SimpleTree is a project to create a base class for tree-like objects in C#. Inhe
 The basis of the tree is an instance of the Node class. Every node in the tree can be used to create its own subtree, with corresponding methods and properties.
 
 The Node constructor has two overloads:
-```
+```cs
 public Node(string id);
 public Node(string id, Node parent);
 ```
 
 You can construct a tree by creating each node and passing in its parent as parameter. The class also features the following methods:
 
-```
+```cs
 // Adds a child node to an existing node
-public void AddChild(Node child);
+public void AddChild(Node child){...}
 
 // Removes a child node
-public void AddChild(Node child);
+public void AddChild(Node child){...}
 
 // Adds a parent to an existing root node
-public void AddParent(Node parent);
+public void AddParent(Node parent){...}
 
 // Removes a parent and makes the node a root
-public void RemoveParent(Node parent);
+public void RemoveParent(Node parent){...}
 ```
 
 ### Features
 
 Node objects also feature the following convenient read-only properties:
-```
+```cs
 // The node's parent
-public Node Parent;
+public Node Parent
 
 // The node's root
-public Node Root;
+public Node Root
 
 // The full path from the node back to the root
-public List<Node> Path;
+public List<Node> Path
 
 // List of the node's children
-public HashSet<Node> Children;
+public HashSet<Node> Children
 
 // List of the node's leaves
-public HashSet<Node> Leaves;
+public HashSet<Node> Leaves
 
 // List of the node's descendants
-public HashSet<Node> Descendants;
+public HashSet<Node> Descendants
 
 // True if the node is a leaf
-public bool IsLeaf;
+public bool IsLeaf
 
 // True if the node is a root
-public bool IsRoot;
+public bool IsRoot
 ```
 
 Node objects also allow you to pretty print the tree to the console using the following method:
-```
+```cs
 public void PrintPretty();
 ```
 
@@ -72,7 +72,7 @@ You can either use the Node class directly or inherit from it to create your own
 
 You can find a minimum working example of a custom class here:
 
-```
+```cs
 using SimpleTree;
 
 namespace CustomNamespace
