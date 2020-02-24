@@ -1,6 +1,6 @@
-# Simple Tree
+# SimpleTree
 
-Simple Tree is a project to create a simple tree-like class in C#. This class is intended to provide a base for custom tree-like objects.
+SimpleTree is a project to create a tree-like objects in C#. The class is intended to provide a base for other custom tree-like objects.
 
 ## Usage
 
