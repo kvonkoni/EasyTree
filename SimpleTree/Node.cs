@@ -57,7 +57,6 @@ namespace SimpleTree
             Parent = null;
             IsRoot = true;
             IsLeaf = true;
-            
             Path.Add(this);
         }
 
@@ -67,7 +66,7 @@ namespace SimpleTree
             Parent = parent;
             IsRoot = false;
             IsLeaf = true;
-
+            Path.Add(this);
             AddParent(parent);
         }
 
