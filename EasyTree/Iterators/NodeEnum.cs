@@ -3,23 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EasyTree
+namespace EasyTree.Iterators
 {
     public class NodeEnum : IEnumerator
     {
-        public Node[] _nodes;
+        public List<Node> _nodelist;
 
         private int position = -1;
 
-        public NodeEnum(Node[] nodes)
+        public NodeEnum(List<Node> nodelist)
         {
-            _nodes = nodes;
+            _nodelist = nodelist;
         }
 
         public bool MoveNext()
         {
             position++;
-            return (position < _nodes.Length);
+            return (position < _nodelist.Count);
         }
 
         public void Reset()
@@ -41,7 +41,7 @@ namespace EasyTree
             {
                 try
                 {
-                    return _nodes[position];
+                    return _nodelist[position];
                 }
                 catch (IndexOutOfRangeException)
                 {

@@ -183,8 +183,10 @@ namespace EasyTree
             if (Parent != null)
             {
                 Root = Parent.Root;
-                Path = new List<Node>(Parent.Path);
-                Path.Add(this);
+                Path = new List<Node>(Parent.Path)
+                {
+                    this
+                };
             }
             else
             {
