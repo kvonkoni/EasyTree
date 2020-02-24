@@ -66,6 +66,14 @@ public void PrintPretty();
 
 You can inherit from this class to create your own tree-like class.
 
+## Contributing
+
+Feel free to contribute by creating an issue or submitting a PR.
+
+## Author
+
+[Kier von Konigslow](https://github.com/kvonkoni)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
