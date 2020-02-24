@@ -12,10 +12,6 @@ namespace SimpleTree
         
         public string Id { get; protected set; }
 
-        public Node Parent { get; protected set; }
-
-        public List<Node> Children { get; protected set; } = new List<Node>();
-
         public bool IsRoot { get; protected set; }
 
         public bool IsLeaf
@@ -45,17 +41,20 @@ namespace SimpleTree
 
         public Node Root { get; protected set; }
 
-        public List<Node> Leaves { get; protected set; } = new List<Node>();
+        public Node Parent { get; protected set; }
 
-        public List<Node> Descendants { get; protected set; } = new List<Node>();
+        public List<Node> Path { get; protected set; } = new List<Node>();
 
-        public List<Node> Path { get ; protected set; } = new List<Node>();
+        public HashSet<Node> Children { get; protected set; } = new HashSet<Node>();
+
+        public HashSet<Node> Leaves { get; protected set; } = new HashSet<Node>();
+
+        public HashSet<Node> Descendants { get; protected set; } = new HashSet<Node>();
 
         public Node(string id)
         {
             Id = id;
             Parent = null;
-            Children = new List<Node>();
             IsRoot = true;
             IsLeaf = true;
             
@@ -78,6 +77,12 @@ namespace SimpleTree
             
             Children.Add(child);
             child.Parent = this;
+
+            HashSet<Node>.Enumerator dEnum = child.Descendants.GetEnumerator();
+            while (dEnum.MoveNext())
+            {
+                AddDescendant(dEnum.Current);
+            }
             AddDescendant(child);
             
             if (IsLeaf)
@@ -97,12 +102,19 @@ namespace SimpleTree
 
         public void RemoveChild(Node child)
         {
-            for (int i = 0; i < child.Leaves.Count; i++)
+            HashSet<Node>.Enumerator lEnum = child.Leaves.GetEnumerator();
+            while (lEnum.MoveNext())
             {
-                RemoveLeaf(Leaves[i]);
+                RemoveLeaf(lEnum.Current);
             }
-            
+
+            HashSet<Node>.Enumerator dEnum = child.Descendants.GetEnumerator();
+            while (dEnum.MoveNext())
+            {
+                RemoveDescendant(dEnum.Current);
+            }
             RemoveDescendant(child);
+
             child.Parent = null;
             Children.Remove(child);
             child.RedeterminePaths();
@@ -178,9 +190,10 @@ namespace SimpleTree
             }
             if (!IsLeaf)
             {
-                for (int i=0; i < Children.Count; i++)
+                HashSet<Node>.Enumerator cEnum = Children.GetEnumerator();
+                while (cEnum.MoveNext())
                 {
-                    Children[i].RedeterminePaths();
+                    cEnum.Current.RedeterminePaths();
                 }
             }
         }
@@ -202,8 +215,11 @@ namespace SimpleTree
             }
             Console.WriteLine(Id);
 
+            List<Node> cList = new List<Node>(Children);
             for (int i = 0; i < Children.Count; i++)
-                Children[i].PrintPretty(indent, i == Children.Count - 1);
+            {
+                cList[i].PrintPretty(indent, i == Children.Count - 1);
+            }
         }
 
         public void PrintPath()
