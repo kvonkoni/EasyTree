@@ -37,17 +37,20 @@ Node objects also feature the following convenient read-only properties:
 // The node's parent
 public Node Parent;
 
-// List of the node's children
-public List<Node> Children;
+// The node's root
+public Node Root;
 
 // The full path from the node back to the root
 public List<Node> Path;
 
+// List of the node's children
+public HashSet<Node> Children;
+
 // List of the node's leaves
-public List<Node> Leaves;
+public HashSet<Node> Leaves;
 
 // List of the node's descendants
-public List<Node> Descendants;
+public HashSet<Node> Descendants;
 
 // True if the node is a leaf
 public bool IsLeaf;
