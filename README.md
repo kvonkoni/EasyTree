@@ -54,6 +54,11 @@ public bool IsLeaf;
 public bool IsRoot;
 ```
 
+Node objects also allow you to pretty print the tree to the console using the following method:
+```
+public void PrintPretty();
+```
+
 You can inherit from this class to create your own tree-like class.
 
 ## License
