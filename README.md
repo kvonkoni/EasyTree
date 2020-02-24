@@ -66,6 +66,36 @@ public void PrintPretty();
 
 You can inherit from this class to create your own tree-like class.
 
+## Usage
+
+You can either use the Node class directly or inherit from it to create your own custom class of tree-like objects that makes use of the above APIs.
+
+You can find a minimum working example of a custom class here:
+
+```
+using SimpleTree;
+
+namespace CustomNamespace
+{
+    public class SampleClass : Node
+    {
+        // Insert custom properties here
+        
+        public SampleClass(string id) : base(id)
+        {
+            // Insert custom constructor here
+        }
+
+        public SampleClass(string id, SampleClass parent) : base(id, parent)
+        {
+            // Insert custom constructor overload here
+        }
+
+        // Insert custom methods here
+    }
+}
+```
+
 ## Contributing
 
 Feel free to contribute by creating an issue or submitting a PR.

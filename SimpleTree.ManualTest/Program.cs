@@ -44,6 +44,16 @@ namespace SimpleTree.ManualTest
             childA.PrintPath();
 
             parent.PrintPretty("", true);
+
+            var sampleRoot = new SampleClass("sampleRoot");
+            var sampleChildA = new SampleClass("sampleChildA", sampleRoot);
+            var sampleChildB = new SampleClass("sampleChildB", sampleRoot);
+            var sampleChildC = new SampleClass("sampleChildC", sampleRoot);
+
+            var sampleGChild1 = new SampleClass("sampleGChild1", sampleChildC);
+            var sampleGChild2 = new SampleClass("sampleGChild2", sampleChildC);
+
+            sampleRoot.PrintPretty("", true);
         }
     }
 }
