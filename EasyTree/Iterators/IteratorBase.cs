@@ -10,6 +10,8 @@ namespace EasyTree.Iterators
 
         protected List<Node> _nodelist;
 
+        public delegate void PerformFunction(Node node);
+
         public IteratorBase(Node node)
         {
             _node = node;
