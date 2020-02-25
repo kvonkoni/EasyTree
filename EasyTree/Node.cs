@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using EasyTree.Iterators;
+using NLog;
 using System;
 using System.Collections.Generic;
 
@@ -97,8 +98,11 @@ namespace EasyTree
                 _log.Trace($"Setting {child}.IsRoot to \"false\"");
                 child.IsRoot = false;
             }
-
-            child.RedeterminePaths();
+            
+            foreach (Node node in new PreOrderIterator(child))
+            {
+                node.RedeterminePaths();
+            }
         }
 
         public void RemoveChild(Node child)
@@ -118,7 +122,11 @@ namespace EasyTree
 
             child.Parent = null;
             Children.Remove(child);
-            child.RedeterminePaths();
+            
+            foreach (Node node in new PreOrderIterator(child))
+            {
+                node.RedeterminePaths();
+            }
             
             if (Children.Count == 0)
             {
@@ -192,13 +200,6 @@ namespace EasyTree
             {
                 Root = this;
                 Path = new List<Node>() { this };
-            }
-            if (!IsLeaf)
-            {
-                foreach (Node child in Children)
-                {
-                    child.RedeterminePaths();
-                }
             }
         }
 
