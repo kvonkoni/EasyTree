@@ -37,13 +37,35 @@ namespace EasyTree.ManualTest
 
             var sampleRoot = new SampleClass("sampleRoot");
             var sampleChildA = new SampleClass("sampleChildA", sampleRoot);
+            var sampleGChild1 = new SampleClass("sampleGChild1", sampleChildA);
+            var sampleGChild2 = new SampleClass("sampleGChild2", sampleChildA);
+            var sampleGGChildX = new SampleClass("sampleGGChildX", sampleGChild2);
+            var sampleGGGChildM = new SampleClass("sampleGGGChildM", sampleGGChildX);
+            var sampleGGChildY = new SampleClass("sampleGGChildY", sampleGChild2);
             var sampleChildB = new SampleClass("sampleChildB", sampleRoot);
             var sampleChildC = new SampleClass("sampleChildC", sampleRoot);
+            var sampleGChild3 = new SampleClass("sampleGChild3", sampleChildC);
+            var sampleGChild4 = new SampleClass("sampleGChild4", sampleChildC);
 
-            var sampleGChild1 = new SampleClass("sampleGChild1", sampleChildC);
-            var sampleGChild2 = new SampleClass("sampleGChild2", sampleChildC);
-
+            Console.WriteLine("");
+            Console.WriteLine("Sample tree:");
             sampleRoot.PrintPretty("", true);
+
+            Console.WriteLine("");
+            Console.WriteLine("Using pre-order depth-first iterator:");
+            foreach (Node node in new PreOrderIterator(sampleRoot))
+            {
+                Console.Write($"---> {node.Id} ");
+            }
+            Console.WriteLine("");
+
+            Console.WriteLine("");
+            Console.WriteLine("Using post-order depth-first iterator:");
+            foreach (Node node in new PostOrderIterator(sampleRoot))
+            {
+                Console.Write($"---> {node.Id} ");
+            }
+            Console.WriteLine("");
         }
     }
 }
