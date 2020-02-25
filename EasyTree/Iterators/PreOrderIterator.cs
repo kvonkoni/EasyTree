@@ -4,11 +4,23 @@ using System.Collections.Generic;
 
 namespace EasyTree.Iterators
 {
-    public abstract class PreOrderIterator : IteratorBase
+    public class PreOrderIterator : IteratorBase
     {
         public PreOrderIterator(Node node) : base(node)
         {
-            // Insert pre-order search algorithm to populate the list
+            PreOrder(_node);
+        }
+
+        private void PreOrder(Node node)
+        {
+            _nodelist.Add(node);
+            if (!node.IsLeaf)
+            {
+                foreach (Node child in node.Children)
+                {
+                    PreOrder(child);
+                }
+            }
         }
     }
 }

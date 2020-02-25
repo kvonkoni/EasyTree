@@ -1,4 +1,5 @@
-﻿using NLog;
+﻿using EasyTree.Iterators;
+using NLog;
 using System;
 
 namespace EasyTree.ManualTest
@@ -25,20 +26,9 @@ namespace EasyTree.ManualTest
             var childA = new Node("childA", parent);
             var childB = new Node("childB", parent);
             var childC = new Node("childC", parent);
-
             var grandchildX = new Node("childX", childB);
             var grandchildY = new Node("childY", childB);
             var grandchildZ = new Node("childZ", childC);
-
-            foreach (Node leaf in parent.Leaves)
-            {
-                Console.WriteLine($"{leaf} is parent's leaf");
-            }
-
-            foreach (Node leaf in childB.Leaves)
-            {
-                Console.WriteLine($"{leaf} is childB's leaf");
-            }
 
             grandchildX.PrintPath();
             childA.PrintPath();

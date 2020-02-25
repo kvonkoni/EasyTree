@@ -13,6 +13,7 @@ namespace EasyTree.Iterators
         public IteratorBase(Node node)
         {
             _node = node;
+            _nodelist = new List<Node>();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
