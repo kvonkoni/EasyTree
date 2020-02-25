@@ -6,7 +6,7 @@ EasyTree is a project to create a base class for tree-like objects in C#. Inheri
 
 ### Creating a Tree
 
-The basis of the tree is an instance of the Node class. Every node in the tree can be used to create its own subtree, with corresponding methods and properties.
+The basis of the tree is an instance of the Node class in the EasyTree namespace. Every node in the tree can be used to create its own subtree, with corresponding methods and properties.
 
 The Node constructor has two overloads:
 ```cs
@@ -68,6 +68,8 @@ You can inherit from this class to create your own tree-like class.
 
 ## Usage
 
+### Creating a custom class
+
 You can either use the Node class directly or inherit from it to create your own custom class of tree-like objects that makes use of the above APIs.
 
 You can find a minimum working example of a custom class here:
@@ -93,6 +95,24 @@ namespace CustomNamespace
 
         // Insert custom methods here
     }
+}
+```
+
+### Iterators
+
+The EasyTree.Iterators namespace provides classes that implement the IEnumerable interface that allow you to search the tree.
+
+```cs
+// Iterate through the tree using a depth-first pre-order search
+foreach (Node element in new PreOrderIterator(yourNode))
+{
+    // Insert code
+}
+
+// Iterate through the tree using a depth-first post-order search
+foreach (Node element in new PostOrderIterator(yourNode))
+{
+    // Insert code
 }
 ```
 
