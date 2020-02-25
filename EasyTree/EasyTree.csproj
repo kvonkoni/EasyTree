@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.1.0</Version>
+    <Version>0.2.0</Version>
     <Authors>Kier von Konigslow</Authors>
     <Company />
     <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
@@ -13,7 +13,8 @@
     <NeutralLanguage />
     <PackageId>EasyTree</PackageId>
     <Product>EasyTree</Product>
-    <PackageReleaseNotes>Initial release.</PackageReleaseNotes>
+    <PackageReleaseNotes>Features:
+* Added two depth-first seach classes to provide foreach functionality</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
