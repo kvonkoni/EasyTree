@@ -105,6 +105,41 @@ namespace EasyTree
             }
         }
 
+        public Node AddChild(string id)
+        {
+            var child = new Node(id);
+            _log.Debug($"Adding {this} as parent to {child}");
+
+            Children.Add(child);
+            child.Parent = this;
+
+            HashSet<Node>.Enumerator dEnum = child.Descendants.GetEnumerator();
+            while (dEnum.MoveNext())
+            {
+                AddDescendant(dEnum.Current);
+            }
+            AddDescendant(child);
+
+            if (IsLeaf)
+            {
+                _log.Trace($"Setting {this}.IsLeaf to \"false\"");
+                IsLeaf = false;
+            }
+
+            if (child.IsRoot)
+            {
+                _log.Trace($"Setting {child}.IsRoot to \"false\"");
+                child.IsRoot = false;
+            }
+
+            foreach (Node node in new PreOrderIterator(child))
+            {
+                node.RedeterminePaths();
+            }
+
+            return child;
+        }
+
         public void RemoveChild(Node child)
         {
             HashSet<Node>.Enumerator lEnum = child.Leaves.GetEnumerator();
@@ -138,6 +173,13 @@ namespace EasyTree
         public void AddParent(Node parent)
         {
             parent.AddChild(this);
+        }
+
+        public Node AddParent(string id)
+        {
+            var parent = new Node(id);
+            parent.AddChild(this);
+            return parent;
         }
 
         public void RemoveParent()
