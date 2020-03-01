@@ -30,7 +30,7 @@ public void RemoveChild(Node child){...}
 public void AddParent(Node parent){...}
 
 // Creates then adds a parent to an existing node, returns the parent
-public Node AddParent(Node parent){...}
+public Node AddParent(string id){...}
 
 // Removes a parent and makes the node a root
 public void RemoveParent(Node parent){...}
