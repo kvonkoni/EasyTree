@@ -20,11 +20,17 @@ You can construct a tree by creating each node and passing in its parent as para
 // Adds a child node to an existing node
 public void AddChild(Node child){...}
 
+// Creates then adds a child node to an existing node, return the child
+public Node AddChild(string id){...}
+
 // Removes a child node
 public void RemoveChild(Node child){...}
 
-// Adds a parent to an existing root node
+// Adds a parent to an existing node
 public void AddParent(Node parent){...}
+
+// Creates then adds a parent to an existing node, returns the parent
+public Node AddParent(Node parent){...}
 
 // Removes a parent and makes the node a root
 public void RemoveParent(Node parent){...}
