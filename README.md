@@ -8,9 +8,11 @@ EasyTree is a project to create a base class for tree-like objects in C#. Inheri
 
 The basis of the tree is an instance of the Node class in the EasyTree namespace. Every node in the tree can be used to create its own subtree, with corresponding methods and properties.
 
-The Node constructor has two overloads:
+The Node constructor has four overloads:
 ```cs
+public Node();
 public Node(string id);
+public Node(Node parent);
 public Node(string id, Node parent);
 ```
 
@@ -21,6 +23,9 @@ You can construct a tree by creating each node and passing in its parent as para
 public void AddChild(Node child){...}
 
 // Creates then adds a child node to an existing node, return the child
+public Node AddChild(){...}
+
+// Creates then adds a child node to an existing node, return the child
 public Node AddChild(string id){...}
 
 // Removes a child node
@@ -28,6 +33,9 @@ public void RemoveChild(Node child){...}
 
 // Adds a parent to an existing node
 public void AddParent(Node parent){...}
+
+// Creates then adds a parent to an existing node, returns the parent
+public Node AddParent(){...}
 
 // Creates then adds a parent to an existing node, returns the parent
 public Node AddParent(string id){...}
@@ -49,13 +57,13 @@ public Node Root
 // The full path from the node back to the root
 public List<Node> Path
 
-// List of the node's children
-public HashSet<Node> Children
+// List of the node's children in chronological order (the order you added them)
+public List<Node> Children
 
-// List of the node's leaves
+// HashSet (unordered) of the node's leaves
 public HashSet<Node> Leaves
 
-// List of the node's descendants
+// HashSet (unordered) of the node's descendants
 public HashSet<Node> Descendants
 
 // True if the node is a leaf

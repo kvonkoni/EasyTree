@@ -52,6 +52,16 @@ namespace EasyTree
 
         public HashSet<Node> Descendants { get; protected set; } = new HashSet<Node>();
 
+        public Node()
+        {
+            Id = null;
+            Parent = null;
+            IsRoot = true;
+            IsLeaf = true;
+            Root = this;
+            Path.Add(this);
+        }
+
         public Node(string id)
         {
             Id = id;
@@ -62,13 +72,24 @@ namespace EasyTree
             Path.Add(this);
         }
 
+        public Node(Node parent)
+        {
+            Id = null;
+            Parent = parent;
+            IsRoot = false;
+            IsLeaf = true;
+            Root = this;
+            Path.Add(this);
+            AddParent(parent);
+        }
+
         public Node(string id, Node parent)
         {
             Id = id;
             Parent = parent;
             IsRoot = false;
             IsLeaf = true;
-            Root = Parent.Root;
+            Root = this;
             Path.Add(this);
             AddParent(parent);
         }
@@ -245,7 +266,13 @@ namespace EasyTree
             }
         }
 
-        public override string ToString() => Id;
+        public override string ToString()
+        {
+            if (Id != null)
+                return Id;
+            else
+                return typeof(Node).ToString();
+        }
 
         public void PrintPretty(string indent, bool last)
         {
@@ -260,7 +287,7 @@ namespace EasyTree
                 Console.Write("|-");
                 indent += "| ";
             }
-            Console.WriteLine(Id);
+            Console.WriteLine(ToString());
 
             List<Node> cList = new List<Node>(Children);
             for (int i = 0; i < Children.Count; i++)
