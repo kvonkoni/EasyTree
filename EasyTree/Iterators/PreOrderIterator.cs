@@ -18,25 +18,31 @@ namespace EasyTree.Iterators
 
         private void PreOrder(Node node)
         {
-            _nodelist.Add(node);
-            if (!node.IsLeaf)
+            var stack = new Stack<Node>();
+            stack.Push(node);
+            while (stack.Count > 0)
             {
-                foreach (Node child in node.Children)
+                var currentNode = stack.Pop();
+                _nodelist.Add(currentNode);
+                for (int i=currentNode.Children.Count-1; i >= 0; i--)
                 {
-                    PreOrder(child);
+                    stack.Push(currentNode.Children[i]);
                 }
             }
         }
 
         private void PreOrder(Node node, PerformFunction function)
         {
-            _nodelist.Add(node);
-            function(node);
-            if (!node.IsLeaf)
+            var stack = new Stack<Node>();
+            stack.Push(node);
+            while (stack.Count > 0)
             {
-                foreach (Node child in node.Children)
+                var currentNode = stack.Pop();
+                _nodelist.Add(currentNode);
+                function(currentNode);
+                for (int i = currentNode.Children.Count - 1; i >= 0; i--)
                 {
-                    PreOrder(child);
+                    stack.Push(currentNode.Children[i]);
                 }
             }
         }
