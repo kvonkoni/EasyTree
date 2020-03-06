@@ -6,7 +6,7 @@ namespace EasyTree.Iterators
 {
     public class LevelOrderIterator : IteratorBase
     {
-        private Queue<Node> _queue;
+        private readonly Queue<Node> _queue;
 
         public LevelOrderIterator(Node node) : base(node)
         {
