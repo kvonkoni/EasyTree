@@ -133,6 +133,12 @@ foreach (Node element in new PostOrderIterator(yourNode))
 {
     // Insert code
 }
+
+// Iterate through the tree using a breadth-first level-order search
+foreach (Node element in new LevelOrderIterator(yourNode))
+{
+    // Insert code
+}
 ```
 
 ## Contributing
