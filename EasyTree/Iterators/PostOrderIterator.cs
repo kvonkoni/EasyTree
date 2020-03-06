@@ -18,27 +18,45 @@ namespace EasyTree.Iterators
 
         private void PostOrder(Node node)
         {
-            if (!node.IsLeaf)
+            var stack = new Stack<Node>();
+            var outputStack = new Stack<Node>();
+            stack.Push(node);
+            while (stack.Count > 0)
             {
-                foreach (Node child in node.Children)
+                var currentNode = stack.Pop();
+                outputStack.Push(currentNode);
+                for (int i=0; i < currentNode.Children.Count; i++)
                 {
-                    PostOrder(child);
+                    stack.Push(currentNode.Children[i]);
                 }
             }
-            _nodelist.Add(node);
+
+            while (outputStack.Count > 0)
+            {
+                _nodelist.Add(outputStack.Pop());
+            }
         }
 
         private void PostOrder(Node node, PerformFunction function)
         {
-            if (!node.IsLeaf)
+            var stack = new Stack<Node>();
+            var outputStack = new Stack<Node>();
+            stack.Push(node);
+            while (stack.Count > 0)
             {
-                foreach (Node child in node.Children)
+                var currentNode = stack.Pop();
+                outputStack.Push(currentNode);
+                for (int i = 0; i < currentNode.Children.Count; i++)
                 {
-                    PostOrder(child);
+                    stack.Push(currentNode.Children[i]);
                 }
             }
-            _nodelist.Add(node);
-            function(node);
+
+            while (outputStack.Count > 0)
+            {
+                _nodelist.Add(outputStack.Pop());
+                function(node);
+            }
         }
     }
 }
