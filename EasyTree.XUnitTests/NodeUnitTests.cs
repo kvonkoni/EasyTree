@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -33,11 +32,11 @@ namespace EasyTree.XUnitTests
             Assert.True(childC.IsLeaf);
 
             // Making sure the lists of descendants are correct
-            Assert.Equal(new HashSet<Node>(){ childA, childB, childC }, root.Descendants);
+            Assert.Equal(new HashSet<Node>() { childA, childB, childC }, root.Descendants);
             Assert.Equal(new HashSet<Node>() { childB, childC }, childA.Descendants);
             Assert.Equal(new HashSet<Node>() { childC }, childB.Descendants);
             Assert.Empty(childC.Descendants);
-            
+
             // Making sure all paths are correct
             Assert.Equal(new List<Node>() { root }, root.Path);
             Assert.Equal(new List<Node>() { root, childA }, childA.Path);
@@ -93,10 +92,10 @@ namespace EasyTree.XUnitTests
         {
             var root = new Node("root");
             var childA = new Node("childA", root);
-            
+
             var childB = new Node("childB", childA);
             var childC = new Node("childC", childB);
-            
+
             childA.RemoveChild(childB);
 
             // Making sure only 'root' is a root
