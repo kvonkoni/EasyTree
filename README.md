@@ -10,10 +10,10 @@ The basis of the tree is an instance of the Node class in the EasyTree namespace
 
 The Node constructor has four overloads:
 ```cs
-public Node();
-public Node(string id);
-public Node(Node parent);
-public Node(string id, Node parent);
+new Node();
+new Node(string id);
+new Node(Node parent);
+new Node(string id, Node parent);
 ```
 
 You can construct a tree by creating each node and passing in its parent as parameter. The class also features the following methods:
