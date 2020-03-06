@@ -55,7 +55,7 @@ namespace EasyTree.ManualTest
             Console.WriteLine("Using pre-order depth-first iterator:");
             foreach (Node node in new PreOrderIterator(sampleRoot))
             {
-                Console.Write($"---> {node.Id} ");
+                Console.Write($"---> {node} ");
             }
             Console.WriteLine("");
 
@@ -63,7 +63,15 @@ namespace EasyTree.ManualTest
             Console.WriteLine("Using post-order depth-first iterator:");
             foreach (Node node in new PostOrderIterator(sampleRoot))
             {
-                Console.Write($"---> {node.Id} ");
+                Console.Write($"---> {node} ");
+            }
+            Console.WriteLine("");
+
+            Console.WriteLine("");
+            Console.WriteLine("Using level-order breadth-first iterator:");
+            foreach (Node node in new LevelOrderIterator(sampleRoot))
+            {
+                Console.Write($"---> {node} ");
             }
             Console.WriteLine("");
         }

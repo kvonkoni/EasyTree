@@ -4,7 +4,7 @@ using Xunit;
 
 namespace EasyTree.XUnitTests
 {
-    public class UnitTests
+    public class NodeUnitTests
     {
         [Fact]
         public void TestConstructor()
