@@ -14,7 +14,8 @@
     <PackageId>EasyTree</PackageId>
     <Product>EasyTree</Product>
     <PackageReleaseNotes>Features:
-* Added two depth-first seach classes to provide foreach functionality</PackageReleaseNotes>
+* Added two new constructor overloads
+* Added breadth-first iterator class</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
