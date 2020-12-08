@@ -48,6 +48,8 @@ namespace EasyTree
         
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private bool _isLeaf;
 
         public Node()
@@ -102,6 +104,8 @@ namespace EasyTree
             {
                 node.RedeterminePaths();
             }
+
+            NotifyPropertyChanged(null);
         }
 
         public void RemoveChild(Node child)
@@ -135,6 +139,8 @@ namespace EasyTree
                 IsLeaf = true;
             }
             child.IsRoot = true;
+
+            NotifyPropertyChanged(null);
         }
 
         public void AddParent(Node parent)
@@ -231,6 +237,14 @@ namespace EasyTree
 
             NotifyPropertyChanged("Root");
             NotifyPropertyChanged("Path");
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
