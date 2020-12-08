@@ -29,6 +29,7 @@ namespace EasyTree
                     {
                         RemoveLeaf(this);
                     }
+                    NotifyPropertyChanged("IsLeaf");
                 }
             }
         }
@@ -44,7 +45,7 @@ namespace EasyTree
         public HashSet<Node> Leaves { get; private set; } = new HashSet<Node>();
 
         public HashSet<Node> Descendants { get; private set; } = new HashSet<Node>();
-
+        
         public event PropertyChangedEventHandler PropertyChanged;
 
         private bool _isLeaf;
@@ -74,7 +75,10 @@ namespace EasyTree
                 throw new TreeStructureException("The child node is in its parent's path. A tree cannot contain a loop.");
 
             Children.Add(child);
+            NotifyPropertyChanged("Children");
+            
             child.Parent = this;
+            child.NotifyPropertyChanged("Parent");
 
             HashSet<Node>.Enumerator dEnum = child.Descendants.GetEnumerator();
             while (dEnum.MoveNext())
@@ -91,6 +95,7 @@ namespace EasyTree
             if (child.IsRoot)
             {
                 child.IsRoot = false;
+                child.NotifyPropertyChanged("IsRoot");
             }
             
             foreach (Node node in new PreOrderIterator(child))
@@ -115,8 +120,11 @@ namespace EasyTree
             RemoveDescendant(child);
 
             child.Parent = null;
-            Children.Remove(child);
+            child.NotifyPropertyChanged("Parent");
             
+            Children.Remove(child);
+            NotifyPropertyChanged("Children");
+
             foreach (Node node in new PreOrderIterator(child))
             {
                 node.RedeterminePaths();
@@ -142,6 +150,8 @@ namespace EasyTree
         private void AddDescendant(Node descendant)
         {
             Descendants.Add(descendant);
+            NotifyPropertyChanged("Descendants");
+
             if (Parent != null)
             {
                 Parent.AddDescendant(descendant);
@@ -151,6 +161,8 @@ namespace EasyTree
         private void RemoveDescendant(Node descendant)
         {
             Descendants.Remove(descendant);
+            NotifyPropertyChanged("Descendants");
+            
             if (Parent != null)
             {
                 Parent.RemoveDescendant(descendant);
@@ -160,6 +172,8 @@ namespace EasyTree
         private void AddLeaf(Node leaf)
         {
             Leaves.Add(leaf);
+            NotifyPropertyChanged("Leaves");
+            
             if (Parent != null)
             {
                 Parent.AddLeaf(leaf);
@@ -169,10 +183,13 @@ namespace EasyTree
         private void RemoveLeaf(Node leaf)
         {
             Leaves.Remove(leaf);
+            NotifyPropertyChanged("Leaves");
+            
             if (Parent != null)
             {
                 Parent.RemoveLeaf(leaf);
             }
+
         }
 
         private void RedeterminePaths()
@@ -188,8 +205,14 @@ namespace EasyTree
             else
             {
                 Root = this;
-                Path = new List<Node>() { this };
+                Path = new List<Node>()
+                {
+                    this
+                };
             }
+
+            NotifyPropertyChanged("Root");
+            NotifyPropertyChanged("Path");
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
