@@ -49,7 +49,15 @@ namespace EasyTree.XUnitTests
         }
 
         [Fact]
-        public void Test_AddChild_CircularChildren_TreeStructureExceptionThrown()
+        public void Test_AddChild_Self_TreeStructureExceptionThrown()
+        {
+            var node = new Node();
+
+            Assert.Throws<TreeStructureException>(() => node.AddChild(node));
+        }
+
+        [Fact]
+        public void Test_AddChild_Loop_TreeStructureExceptionThrown()
         {
             var nodeA = new Node();
             var nodeB = new Node();
