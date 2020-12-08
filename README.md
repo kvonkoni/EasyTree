@@ -59,28 +59,28 @@ foreach (Node element in myNode.GetLevelOrderIterator())
 Node objects also feature the following convenient properties:
 ```cs
 // The node's parent
-public Node Parent
+public Node Parent { get; }
 
 // The node's root
-public Node Root
+public Node Root { get; }
 
 // The full path from the node back to the root
-public List<Node> Path
+public List<Node> Path { get; }
 
 // List of the node's children in chronological order (the order you added them)
-public List<Node> Children
+public List<Node> Children { get; }
 
 // HashSet (unordered) of the node's leaves
-public HashSet<Node> Leaves
+public HashSet<Node> Leaves { get; }
 
 // HashSet (unordered) of the node's descendants
-public HashSet<Node> Descendants
+public HashSet<Node> Descendants { get; }
 
 // True if the node is a leaf
-public bool IsLeaf
+public bool IsLeaf { get; }
 
 // True if the node is a root
-public bool IsRoot
+public bool IsRoot { get; }
 ```
 
 You can inherit from this class to create your own tree-like class.
@@ -109,7 +109,6 @@ namespace CustomNameSpace
 
         public SampleClass(..., SampleClass parent) : base(parent)
         {
-            SampleName = sampleName;
             // Insert custom constructor overload here
         }
     }
