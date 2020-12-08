@@ -6,12 +6,16 @@ namespace EasyTree.XUnitTests
     public class NodeUnitTests
     {
         [Fact]
-        public void TestConstructor()
+        public void Test_AddParent_ValidChildren_RootLeafDescendantPathPropertiesCorrect()
         {
-            var root = new Node("root");
-            var childA = new Node("childA", root);
-            var childB = new Node("childB", childA);
-            var childC = new Node("childC", childB);
+            var root = new Node();
+            var childA = new Node();
+            var childB = new Node();
+            var childC = new Node();
+
+            childA.AddParent(root);
+            childB.AddParent(childA);
+            childC.AddParent(childB);
 
             // Making sure only 'root' is a root
             Assert.True(root.IsRoot);
@@ -45,12 +49,12 @@ namespace EasyTree.XUnitTests
         }
 
         [Fact]
-        public void TestAddChild()
+        public void Test_AddChild_ValidChildren_RootLeafDescendantPathPropertiesCorrect()
         {
-            var root = new Node("root");
-            var childA = new Node("childA");
-            var childB = new Node("childB");
-            var childC = new Node("childC");
+            var root = new Node();
+            var childA = new Node();
+            var childB = new Node();
+            var childC = new Node();
 
             root.AddChild(childA);
             childA.AddChild(childB);
@@ -88,13 +92,13 @@ namespace EasyTree.XUnitTests
         }
 
         [Fact]
-        public void TestRemoveChild()
+        public void Test_RemoveChild_RootLeafDescendantPathPropertiesCorrect()
         {
-            var root = new Node("root");
-            var childA = new Node("childA", root);
+            var root = new Node();
+            var childA = new Node(root);
 
-            var childB = new Node("childB", childA);
-            var childC = new Node("childC", childB);
+            var childB = new Node(childA);
+            var childC = new Node(childB);
 
             childA.RemoveChild(childB);
 

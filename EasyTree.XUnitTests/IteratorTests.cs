@@ -9,17 +9,17 @@ namespace EasyTree.XUnitTests
         [Fact]
         public void TestPreOrderIterator()
         {
-            var root = new Node("root");
-            var childA = new Node("childA", root);
-            var gChild1 = new Node("gChild1", childA);
-            var gChild2 = new Node("gChild2", childA);
-            var gGChildX = new Node("gGChildX", gChild2);
-            var gGGChildM = new Node("gGGChildM", gGChildX);
-            var gGChildY = new Node("gGChildY", gChild2);
-            var childB = new Node("childB", root);
-            var childC = new Node("childC", root);
-            var gChild3 = new Node("gChild3", childC);
-            var gChild4 = new Node("gChild4", childC);
+            var root = new Node();
+            var childA = new Node(root);
+            var gChild1 = new Node(childA);
+            var gChild2 = new Node(childA);
+            var gGChildX = new Node(gChild2);
+            var gGGChildM = new Node(gGChildX);
+            var gGChildY = new Node(gChild2);
+            var childB = new Node(root);
+            var childC = new Node(root);
+            var gChild3 = new Node(childC);
+            var gChild4 = new Node(childC);
 
             var preOrder = new List<Node>();
             foreach (Node node in new PreOrderIterator(root))
@@ -38,17 +38,17 @@ namespace EasyTree.XUnitTests
         [Fact]
         public void TestPostOrderIterator()
         {
-            var root = new Node("root");
-            var childA = new Node("childA", root);
-            var gChild1 = new Node("gChild1", childA);
-            var gChild2 = new Node("gChild2", childA);
-            var gGChildX = new Node("gGChildX", gChild2);
-            var gGGChildM = new Node("gGGChildM", gGChildX);
-            var gGChildY = new Node("gGChildY", gChild2);
-            var childB = new Node("childB", root);
-            var childC = new Node("childC", root);
-            var gChild3 = new Node("gChild3", childC);
-            var gChild4 = new Node("gChild4", childC);
+            var root = new Node();
+            var childA = new Node(root);
+            var gChild1 = new Node(childA);
+            var gChild2 = new Node(childA);
+            var gGChildX = new Node(gChild2);
+            var gGGChildM = new Node(gGChildX);
+            var gGChildY = new Node(gChild2);
+            var childB = new Node(root);
+            var childC = new Node(root);
+            var gChild3 = new Node(childC);
+            var gChild4 = new Node(childC);
 
             var postOrder = new List<Node>();
             foreach (Node node in new PostOrderIterator(root))
@@ -67,17 +67,17 @@ namespace EasyTree.XUnitTests
         [Fact]
         public void TestLevelOrderIterator()
         {
-            var root = new Node("root");
-            var childA = new Node("childA", root);
-            var gChild1 = new Node("gChild1", childA);
-            var gChild2 = new Node("gChild2", childA);
-            var gGChildX = new Node("gGChildX", gChild2);
-            var gGGChildM = new Node("gGGChildM", gGChildX);
-            var gGChildY = new Node("gGChildY", gChild2);
-            var childB = new Node("childB", root);
-            var childC = new Node("childC", root);
-            var gChild3 = new Node("gChild3", childC);
-            var gChild4 = new Node("gChild4", childC);
+            var root = new Node();
+            var childA = new Node(root);
+            var gChild1 = new Node(childA);
+            var gChild2 = new Node(childA);
+            var gGChildX = new Node(gChild2);
+            var gGGChildM = new Node(gGChildX);
+            var gGChildY = new Node(gChild2);
+            var childB = new Node(root);
+            var childC = new Node(root);
+            var gChild3 = new Node(childC);
+            var gChild4 = new Node(childC);
 
             var levelOrder = new List<Node>();
             foreach (Node node in new LevelOrderIterator(root))
