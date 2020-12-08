@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using EasyTree.Iterators;
 
 namespace EasyTree
 {
-    public class Node
+    public class Node : INotifyPropertyChanged
     {
         public bool IsRoot { get; private set; }
 
@@ -42,6 +44,8 @@ namespace EasyTree
         public HashSet<Node> Leaves { get; private set; } = new HashSet<Node>();
 
         public HashSet<Node> Descendants { get; private set; } = new HashSet<Node>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         private bool _isLeaf;
 
@@ -185,6 +189,14 @@ namespace EasyTree
             {
                 Root = this;
                 Path = new List<Node>() { this };
+            }
+        }
+
+        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }
