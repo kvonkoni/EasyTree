@@ -6,7 +6,7 @@ namespace EasyTree
 {
     public class Node
     {
-        public bool IsRoot { get; protected set; }
+        public bool IsRoot { get; private set; }
 
         public bool IsLeaf
         {
@@ -14,7 +14,7 @@ namespace EasyTree
             {
                 return _isLeaf;
             }
-            protected set
+            private set
             {
                 if (_isLeaf != value)
                 {
@@ -31,17 +31,17 @@ namespace EasyTree
             }
         }
 
-        public Node Root { get; protected set; }
+        public Node Root { get; private set; }
 
-        public Node Parent { get; protected set; }
+        public Node Parent { get; private set; }
 
-        public List<Node> Path { get; protected set; } = new List<Node>();
+        public List<Node> Path { get; private set; } = new List<Node>();
 
-        public List<Node> Children { get; protected set; } = new List<Node>();
+        public List<Node> Children { get; private set; } = new List<Node>();
 
-        public HashSet<Node> Leaves { get; protected set; } = new HashSet<Node>();
+        public HashSet<Node> Leaves { get; private set; } = new HashSet<Node>();
 
-        public HashSet<Node> Descendants { get; protected set; } = new HashSet<Node>();
+        public HashSet<Node> Descendants { get; private set; } = new HashSet<Node>();
 
         private bool _isLeaf;
 
@@ -132,7 +132,7 @@ namespace EasyTree
             Parent.RemoveChild(this);
         }
 
-        protected void AddDescendant(Node descendant)
+        private void AddDescendant(Node descendant)
         {
             Descendants.Add(descendant);
             if (Parent != null)
@@ -141,7 +141,7 @@ namespace EasyTree
             }
         }
 
-        protected void RemoveDescendant(Node descendant)
+        private void RemoveDescendant(Node descendant)
         {
             Descendants.Remove(descendant);
             if (Parent != null)
@@ -150,7 +150,7 @@ namespace EasyTree
             }
         }
 
-        protected void AddLeaf(Node leaf)
+        private void AddLeaf(Node leaf)
         {
             Leaves.Add(leaf);
             if (Parent != null)
@@ -159,7 +159,7 @@ namespace EasyTree
             }
         }
 
-        protected void RemoveLeaf(Node leaf)
+        private void RemoveLeaf(Node leaf)
         {
             Leaves.Remove(leaf);
             if (Parent != null)
@@ -168,7 +168,7 @@ namespace EasyTree
             }
         }
 
-        protected void RedeterminePaths()
+        private void RedeterminePaths()
         {
             if (Parent != null)
             {
