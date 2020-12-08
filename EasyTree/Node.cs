@@ -48,8 +48,6 @@ namespace EasyTree
         
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         private bool _isLeaf;
 
         public Node()
@@ -237,14 +235,6 @@ namespace EasyTree
 
             NotifyPropertyChanged("Root");
             NotifyPropertyChanged("Path");
-        }
-
-        private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
         }
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
