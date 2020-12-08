@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EasyTree.Iterators
 {
-    public class PostOrderIterator : IteratorBase
+    internal class PostOrderIterator : IteratorBase
     {
         public PostOrderIterator(Node node) : base(node)
         {

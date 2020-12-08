@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EasyTree.Iterators
 {
-    public class LevelOrderIterator : IteratorBase
+    internal class LevelOrderIterator : IteratorBase
     {
         public LevelOrderIterator(Node node) : base(node)
         {
