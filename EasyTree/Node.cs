@@ -135,6 +135,24 @@ namespace EasyTree
             Parent.RemoveChild(this);
         }
 
+        public IEnumerable<Node> GetPreOrderIterator()
+        {
+            foreach (var node in new PreOrderIterator(this))
+                yield return node;
+        }
+
+        public IEnumerable<Node> GetPostOrderIterator()
+        {
+            foreach (var node in new PostOrderIterator(this))
+                yield return node;
+        }
+
+        public IEnumerable<Node> GetLevelOrderIterator()
+        {
+            foreach (var node in new LevelOrderIterator(this))
+                yield return node;
+        }
+
         private void AddDescendant(Node descendant)
         {
             Descendants.Add(descendant);
