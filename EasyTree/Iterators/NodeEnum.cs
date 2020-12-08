@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EasyTree.Iterators
 {
-    public class NodeEnum : IEnumerator
+    internal class NodeEnum : IEnumerator
     {
         public List<Node> _nodelist;
 

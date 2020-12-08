@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace EasyTree.Iterators
 {
-    public abstract class IteratorBase : IEnumerable
+    internal abstract class IteratorBase : IEnumerable
     {
+        public delegate void PerformFunction(Node node);
+
         protected Node _node;
 
         protected List<Node> _nodelist;
-
-        public delegate void PerformFunction(Node node);
 
         public IteratorBase(Node node)
         {
@@ -20,7 +20,7 @@ namespace EasyTree.Iterators
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return (IEnumerator)GetEnumerator();
+            return GetEnumerator();
         }
 
         public NodeEnum GetEnumerator()
