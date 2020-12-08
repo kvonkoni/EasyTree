@@ -102,8 +102,6 @@ namespace EasyTree
             {
                 node.RedeterminePaths();
             }
-
-            NotifyPropertyChanged(null);
         }
 
         public void RemoveChild(Node child)
@@ -137,8 +135,6 @@ namespace EasyTree
                 IsLeaf = true;
             }
             child.IsRoot = true;
-
-            NotifyPropertyChanged(null);
         }
 
         public void AddParent(Node parent)
