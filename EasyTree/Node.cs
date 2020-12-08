@@ -7,8 +7,6 @@ namespace EasyTree
 {
     public class Node
     {
-        public string Id { get; protected set; }
-
         public bool IsRoot { get; protected set; }
 
         public bool IsLeaf
@@ -54,17 +52,6 @@ namespace EasyTree
 
         public Node()
         {
-            Id = null;
-            Parent = null;
-            IsRoot = true;
-            IsLeaf = true;
-            Root = this;
-            Path.Add(this);
-        }
-
-        public Node(string id)
-        {
-            Id = id;
             Parent = null;
             IsRoot = true;
             IsLeaf = true;
@@ -74,18 +61,6 @@ namespace EasyTree
 
         public Node(Node parent)
         {
-            Id = null;
-            Parent = parent;
-            IsRoot = false;
-            IsLeaf = true;
-            Root = this;
-            Path.Add(this);
-            AddParent(parent);
-        }
-
-        public Node(string id, Node parent)
-        {
-            Id = id;
             Parent = parent;
             IsRoot = false;
             IsLeaf = true;
@@ -126,41 +101,6 @@ namespace EasyTree
             }
         }
 
-        public Node AddChild(string id)
-        {
-            var child = new Node(id);
-            Log.Debug($"Adding {this} as parent to {child}");
-
-            Children.Add(child);
-            child.Parent = this;
-
-            HashSet<Node>.Enumerator dEnum = child.Descendants.GetEnumerator();
-            while (dEnum.MoveNext())
-            {
-                AddDescendant(dEnum.Current);
-            }
-            AddDescendant(child);
-
-            if (IsLeaf)
-            {
-                Log.Trace($"Setting {this}.IsLeaf to \"false\"");
-                IsLeaf = false;
-            }
-
-            if (child.IsRoot)
-            {
-                Log.Trace($"Setting {child}.IsRoot to \"false\"");
-                child.IsRoot = false;
-            }
-
-            foreach (Node node in new PreOrderIterator(child))
-            {
-                node.RedeterminePaths();
-            }
-
-            return child;
-        }
-
         public void RemoveChild(Node child)
         {
             HashSet<Node>.Enumerator lEnum = child.Leaves.GetEnumerator();
@@ -194,13 +134,6 @@ namespace EasyTree
         public void AddParent(Node parent)
         {
             parent.AddChild(this);
-        }
-
-        public Node AddParent(string id)
-        {
-            var parent = new Node(id);
-            parent.AddChild(this);
-            return parent;
         }
 
         public void RemoveParent()
@@ -264,45 +197,6 @@ namespace EasyTree
                 Root = this;
                 Path = new List<Node>() { this };
             }
-        }
-
-        public override string ToString()
-        {
-            if (Id != null)
-                return Id;
-            else
-                return typeof(Node).ToString();
-        }
-
-        public void PrintPretty(string indent, bool last)
-        {
-            Console.Write(indent);
-            if (last)
-            {
-                Console.Write("\\-");
-                indent += "  ";
-            }
-            else
-            {
-                Console.Write("|-");
-                indent += "| ";
-            }
-            Console.WriteLine(ToString());
-
-            List<Node> cList = new List<Node>(Children);
-            for (int i = 0; i < Children.Count; i++)
-            {
-                cList[i].PrintPretty(indent, i == Children.Count - 1);
-            }
-        }
-
-        public void PrintPath()
-        {
-            for (int i=0; i < Path.Count; i++)
-            {
-                Console.Write($"---> {Path[i]} ");
-            }
-            Console.WriteLine("");
         }
     }
 }
