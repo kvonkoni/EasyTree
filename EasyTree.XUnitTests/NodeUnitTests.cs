@@ -92,13 +92,13 @@ namespace EasyTree.XUnitTests
         }
 
         [Fact]
-        public void TestRemoveChild()
+        public void Test_RemoveChild_RootLeafDescendantPathPropertiesCorrect()
         {
-            var root = new Node("root");
-            var childA = new Node("childA", root);
+            var root = new Node();
+            var childA = new Node(root);
 
-            var childB = new Node("childB", childA);
-            var childC = new Node("childC", childB);
+            var childB = new Node(childA);
+            var childC = new Node(childB);
 
             childA.RemoveChild(childB);
 
