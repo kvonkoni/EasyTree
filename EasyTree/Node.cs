@@ -1,7 +1,6 @@
-﻿using EasyTree.Iterators;
-using NLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using EasyTree.Iterators;
 
 namespace EasyTree
 {
@@ -22,12 +21,10 @@ namespace EasyTree
                     _isLeaf = value;
                     if (_isLeaf)
                     {
-                        Log.Trace($"{this} is now a leaf");
                         AddLeaf(this);
                     }
                     else
                     {
-                        Log.Trace($"{this} is no longer a leaf");
                         RemoveLeaf(this);
                     }
                 }
@@ -45,8 +42,6 @@ namespace EasyTree
         public HashSet<Node> Leaves { get; protected set; } = new HashSet<Node>();
 
         public HashSet<Node> Descendants { get; protected set; } = new HashSet<Node>();
-
-        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         private bool _isLeaf;
 
@@ -71,8 +66,6 @@ namespace EasyTree
 
         public void AddChild(Node child)
         {
-            Log.Debug($"Adding {this} as parent to {child}");
-            
             Children.Add(child);
             child.Parent = this;
 
@@ -85,13 +78,11 @@ namespace EasyTree
             
             if (IsLeaf)
             {
-                Log.Trace($"Setting {this}.IsLeaf to \"false\"");
                 IsLeaf = false;
             }
 
             if (child.IsRoot)
             {
-                Log.Trace($"Setting {child}.IsRoot to \"false\"");
                 child.IsRoot = false;
             }
             
@@ -143,7 +134,6 @@ namespace EasyTree
 
         protected void AddDescendant(Node descendant)
         {
-            Log.Debug($"Adding {descendant} to {this}'s list of descentants");
             Descendants.Add(descendant);
             if (Parent != null)
             {
@@ -153,7 +143,6 @@ namespace EasyTree
 
         protected void RemoveDescendant(Node descendant)
         {
-            Log.Debug($"Removing {descendant} from {this}'s list of descentants");
             Descendants.Remove(descendant);
             if (Parent != null)
             {
@@ -163,7 +152,6 @@ namespace EasyTree
 
         protected void AddLeaf(Node leaf)
         {
-            Log.Debug($"Adding {leaf} to {this}'s list of leaves");
             Leaves.Add(leaf);
             if (Parent != null)
             {
@@ -173,7 +161,6 @@ namespace EasyTree
 
         protected void RemoveLeaf(Node leaf)
         {
-            Log.Debug($"Removing {leaf} from {this}'s list of leaves");
             Leaves.Remove(leaf);
             if (Parent != null)
             {
@@ -183,7 +170,6 @@ namespace EasyTree
 
         protected void RedeterminePaths()
         {
-            Log.Debug($"Re-determining {this}'s paths");
             if (Parent != null)
             {
                 Root = Parent.Root;
