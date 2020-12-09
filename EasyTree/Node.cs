@@ -210,9 +210,9 @@ namespace EasyTree
         /// Gets a pre-order iterator of all nodes in the tree.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Node> GetPreOrderIterator()
+        public IEnumerable<T> GetPreOrderIterator<T>() where T :Node
         {
-            foreach (var node in new PreOrderIterator(this))
+            foreach (T node in new PreOrderIterator(this))
                 yield return node;
         }
 
@@ -221,9 +221,9 @@ namespace EasyTree
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public IEnumerable<Node> GetPreOrderIterator(Action<Node> action)
+        public IEnumerable<T> GetPreOrderIterator<T>(Action<T> action) where T : Node
         {
-            foreach (var node in new PreOrderIterator(this))
+            foreach (T node in new PreOrderIterator(this))
             {
                 action.Invoke(node);
                 yield return node;
@@ -234,9 +234,9 @@ namespace EasyTree
         /// Gets a post order iterator of all nodes in the tree.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Node> GetPostOrderIterator()
+        public IEnumerable<T> GetPostOrderIterator<T>() where T : Node
         {
-            foreach (var node in new PostOrderIterator(this))
+            foreach (T node in new PostOrderIterator(this))
                 yield return node;
         }
 
@@ -245,9 +245,9 @@ namespace EasyTree
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public IEnumerable<Node> GetPostOrderIterator(Action<Node> action)
+        public IEnumerable<T> GetPostOrderIterator<T>(Action<T> action) where T : Node
         {
-            foreach (var node in new PostOrderIterator(this))
+            foreach (T node in new PostOrderIterator(this))
             {
                 action.Invoke(node);
                 yield return node;
@@ -258,9 +258,9 @@ namespace EasyTree
         /// Gets a level-order iterator of all nodes in the tree.
         /// </summary>
         /// <returns></returns>
-        public IEnumerable<Node> GetLevelOrderIterator()
+        public IEnumerable<T> GetLevelOrderIterator<T>() where T : Node
         {
-            foreach (var node in new LevelOrderIterator(this))
+            foreach (T node in new LevelOrderIterator(this))
                 yield return node;
         }
 
@@ -269,9 +269,9 @@ namespace EasyTree
         /// </summary>
         /// <param name="action"></param>
         /// <returns></returns>
-        public IEnumerable<Node> GetLevelOrderIterator(Action<Node> action)
+        public IEnumerable<T> GetLevelOrderIterator<T>(Action<T> action) where T : Node
         {
-            foreach (var node in new LevelOrderIterator(this))
+            foreach (T node in new LevelOrderIterator(this))
             {
                 action.Invoke(node);
                 yield return node;

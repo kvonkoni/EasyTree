@@ -1,8 +1,24 @@
 using System.Collections.Generic;
+using System.Text;
 using Xunit;
 
 namespace EasyTree.XUnitTests
 {
+    public class MyTree : Node
+    {
+        public string Name { get; set; }
+
+        public MyTree(string name) : base()
+        {
+            Name = name;
+        }
+
+        public MyTree(string name, MyTree parent) : base(parent)
+        {
+            Name = name;
+        }
+    }
+    
     public class NodeUnitTests
     {
         [Fact]
@@ -135,7 +151,7 @@ namespace EasyTree.XUnitTests
             var gChild4 = new Node(childC);
 
             var preOrder = new List<Node>();
-            foreach (Node node in root.GetPreOrderIterator())
+            foreach (Node node in root.GetPreOrderIterator<Node>())
             {
                 preOrder.Add(node);
             }
@@ -164,7 +180,7 @@ namespace EasyTree.XUnitTests
             var gChild4 = new Node(childC);
 
             var postOrder = new List<Node>();
-            foreach (Node node in root.GetPostOrderIterator())
+            foreach (Node node in root.GetPostOrderIterator<Node>())
             {
                 postOrder.Add(node);
             }
@@ -193,7 +209,7 @@ namespace EasyTree.XUnitTests
             var gChild4 = new Node(childC);
 
             var levelOrder = new List<Node>();
-            foreach (Node node in root.GetLevelOrderIterator())
+            foreach (Node node in root.GetLevelOrderIterator<Node>())
             {
                 levelOrder.Add(node);
             }
@@ -204,6 +220,33 @@ namespace EasyTree.XUnitTests
             };
 
             Assert.Equal(expected, levelOrder);
+        }
+
+        [Fact]
+        public void Test_GetPreOrderIterator_ProvideAction_EnsureCorrectActionOrder()
+        {
+            var root = new MyTree("Root");
+            var childA = new MyTree("ChildA");
+            var childB = new MyTree("ChildB");
+            var child1 = new MyTree("Child1");
+            var child2 = new MyTree("Child2");
+
+            root.AddChild(childA);
+            childA.AddChild(child1);
+            childA.AddChild(child2);
+            root.AddChild(childB);
+
+            var sb = new StringBuilder();
+            foreach (var node in root.GetPreOrderIterator<MyTree>(x => {
+                sb.Append("<p>");
+                sb.Append(x.Name);
+            }))
+                sb.Append("</p>");
+
+            var actual = sb.ToString();
+            var expected = @"<p><Root><ChildA><Child1></p><Child2></p><ChildB>";
+
+            Assert.Equal(expected, actual);
         }
     }
 }
