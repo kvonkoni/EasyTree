@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>EasyTree</name>
+    </assembly>
+    <members>
+        <member name="P:EasyTree.Node.Root">
+            <summary>
+            Gets the tree's root node.
+            </summary>
+        </member>
+        <member name="P:EasyTree.Node.Parent">
+            <summary>
+            Gets the parent node.
+            </summary>
+        </member>
+        <member name="P:EasyTree.Node.IsRoot">
+            <summary>
+            Gets a value indicating whether this is a root node.
+            </summary>
+        </member>
+        <member name="P:EasyTree.Node.IsLeaf">
+            <summary>
+            Gets a value indicating wherther this is a leaf node.
+            </summary>
+        </member>
+        <member name="P:EasyTree.Node.Path">
+            <summary>
+            Gets an ordered list representing the path from the root.
+            </summary>
+        </member>
+        <member name="P:EasyTree.Node.Children">
+            <summary>
+            Gets an ordered list of all the child nodes.
+            </summary>
+        </member>
+        <member name="P:EasyTree.Node.Leaves">
+            <summary>
+            Gets an unordered set collection all the leaf nodes.
+            </summary>
+        </member>
+        <member name="P:EasyTree.Node.Descendants">
+            <summary>
+            Gets an unordered collection of all the descendant nodes.
+            </summary>
+        </member>
+        <member name="E:EasyTree.Node.PropertyChanged">
+            <summary>
+            Occurs when a property has changed.
+            </summary>
+        </member>
+        <member name="M:EasyTree.Node.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:EasyTree.Node"/> class.
+            </summary>
+        </member>
+        <member name="M:EasyTree.Node.#ctor(EasyTree.Node)">
+            <summary>
+            Initializes a new instance of the <see cref="T:EasyTree.Node"/> class.
+            </summary>
+        </member>
+        <member name="M:EasyTree.Node.AddChild(EasyTree.Node)">
+            <summary>
+            Adds a child node to the end of the list of children.
+            </summary>
+            <param name="child"></param>
+        </member>
+        <member name="M:EasyTree.Node.RemoveChild(EasyTree.Node)">
+            <summary>
+            Removes a child node from the list of children.
+            </summary>
+            <param name="child"></param>
+        </member>
+        <member name="M:EasyTree.Node.AddParent(EasyTree.Node)">
+            <summary>
+            Adds a parent node.
+            </summary>
+            <param name="parent"></param>
+        </member>
+        <member name="M:EasyTree.Node.RemoveParent">
+            <summary>
+            Removes a parent node.
+            </summary>
+        </member>
+        <member name="M:EasyTree.Node.GetPreOrderIterator">
+            <summary>
+            Gets a pre-order iterator of all nodes in the tree.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EasyTree.Node.GetPostOrderIterator">
+            <summary>
+            Gets a post order iterator of all nodes in the tree.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:EasyTree.Node.GetLevelOrderIterator">
+            <summary>
+            Gets a level-order iterator of all nodes in the tree.
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
