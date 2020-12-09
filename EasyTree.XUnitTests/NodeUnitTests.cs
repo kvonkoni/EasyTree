@@ -221,32 +221,5 @@ namespace EasyTree.XUnitTests
 
             Assert.Equal(expected, levelOrder);
         }
-
-        [Fact]
-        public void Test_GetPreOrderIterator_ProvideAction_EnsureCorrectActionOrder()
-        {
-            var root = new MyTree("Root");
-            var childA = new MyTree("ChildA");
-            var childB = new MyTree("ChildB");
-            var child1 = new MyTree("Child1");
-            var child2 = new MyTree("Child2");
-
-            root.AddChild(childA);
-            childA.AddChild(child1);
-            childA.AddChild(child2);
-            root.AddChild(childB);
-
-            var sb = new StringBuilder();
-            foreach (var node in root.GetPreOrderIterator<MyTree>(x => {
-                sb.Append("<p>");
-                sb.Append(x.Name);
-            }))
-                sb.Append("</p>");
-
-            var actual = sb.ToString();
-            var expected = @"<p><Root><ChildA><Child1></p><Child2></p><ChildB>";
-
-            Assert.Equal(expected, actual);
-        }
     }
 }
