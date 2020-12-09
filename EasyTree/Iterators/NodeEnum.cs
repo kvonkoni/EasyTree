@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace EasyTree.Iterators
 {
-    internal class NodeEnum : IEnumerator
+    internal class NodeEnum<T> : IEnumerator where T : Node
     {
-        public List<Node> _nodelist;
+        public List<T> _nodelist;
 
         private int position = -1;
 
-        public NodeEnum(List<Node> nodelist)
+        public NodeEnum(List<T> nodelist)
         {
             _nodelist = nodelist;
         }
@@ -34,7 +34,7 @@ namespace EasyTree.Iterators
             }
         }
 
-        public Node Current
+        public T Current
         {
             get
             {

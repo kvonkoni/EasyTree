@@ -3,26 +3,26 @@ using System.Collections.Generic;
 
 namespace EasyTree.Iterators
 {
-    internal class LevelOrderIterator : IteratorBase
+    internal class LevelOrderIterator<T> : IteratorBase<T> where T : Node
     {
-        public LevelOrderIterator(Node node) : base(node)
+        public LevelOrderIterator(T node) : base(node)
         {
             LevelOrder(_node);
         }
 
-        public LevelOrderIterator(Node node, PerformFunction function) : base(node)
+        public LevelOrderIterator(T node, Action<T> action) : base(node)
         {
-            LevelOrder(_node, function);
+            LevelOrder(_node, action);
         }
 
-        private void LevelOrder(Node node)
+        private void LevelOrder(T node)
         {
-            var queue = new Queue<Node>();
+            var queue = new Queue<T>();
             _nodelist.Add(node);
             queue.Enqueue(node);
             while (queue.Count > 0)
             {
-                foreach(Node currentNode in queue.Dequeue().Children)
+                foreach(T currentNode in queue.Dequeue().Children)
                 {
                     _nodelist.Add(currentNode);
                     queue.Enqueue(currentNode);
@@ -30,18 +30,18 @@ namespace EasyTree.Iterators
             }
         }
 
-        private void LevelOrder(Node node, PerformFunction function)
+        private void LevelOrder(T node, Action<T> action)
         {
-            var queue = new Queue<Node>();
+            var queue = new Queue<T>();
             _nodelist.Add(node);
-            function(node);
+            action.Invoke(node);
             queue.Enqueue(node);
             while (queue.Count > 0)
             {
-                foreach (Node currentNode in queue.Dequeue().Children)
+                foreach (T currentNode in queue.Dequeue().Children)
                 {
                     _nodelist.Add(currentNode);
-                    function(node);
+                    action.Invoke(node);
                     queue.Enqueue(currentNode);
                 }
             }

@@ -4,18 +4,15 @@ using System.Collections.Generic;
 
 namespace EasyTree.Iterators
 {
-    internal abstract class IteratorBase : IEnumerable
+    internal abstract class IteratorBase<T> : IEnumerable where T : Node
     {
-        public delegate void PerformFunction(Node node);
+        protected T _node;
 
-        protected Node _node;
+        protected List<T> _nodelist = new List<T>();
 
-        protected List<Node> _nodelist;
-
-        public IteratorBase(Node node)
+        public IteratorBase(T node)
         {
             _node = node;
-            _nodelist = new List<Node>();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
@@ -23,9 +20,9 @@ namespace EasyTree.Iterators
             return GetEnumerator();
         }
 
-        public NodeEnum GetEnumerator()
+        public NodeEnum<T> GetEnumerator()
         {
-            return new NodeEnum(_nodelist);
+            return new NodeEnum<T>(_nodelist);
         }
     }
 }

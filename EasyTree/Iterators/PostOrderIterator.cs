@@ -3,22 +3,22 @@ using System.Collections.Generic;
 
 namespace EasyTree.Iterators
 {
-    internal class PostOrderIterator : IteratorBase
+    internal class PostOrderIterator<T> : IteratorBase<T> where T: Node
     {
-        public PostOrderIterator(Node node) : base(node)
+        public PostOrderIterator(T node) : base(node)
         {
             PostOrder(_node);
         }
 
-        public PostOrderIterator(Node node, PerformFunction function) : base(node)
+        public PostOrderIterator(T node, Action<T> action) : base(node)
         {
-            PostOrder(_node, function);
+            PostOrder(_node, action);
         }
 
-        private void PostOrder(Node node)
+        private void PostOrder(T node)
         {
-            var stack = new Stack<Node>();
-            var outputStack = new Stack<Node>();
+            var stack = new Stack<T>();
+            var outputStack = new Stack<T>();
             stack.Push(node);
             while (stack.Count > 0)
             {
@@ -26,7 +26,7 @@ namespace EasyTree.Iterators
                 outputStack.Push(currentNode);
                 for (int i=0; i < currentNode.Children.Count; i++)
                 {
-                    stack.Push(currentNode.Children[i]);
+                    stack.Push((T)currentNode.Children[i]);
                 }
             }
 
@@ -36,10 +36,10 @@ namespace EasyTree.Iterators
             }
         }
 
-        private void PostOrder(Node node, PerformFunction function)
+        private void PostOrder(T node, Action<T> action)
         {
-            var stack = new Stack<Node>();
-            var outputStack = new Stack<Node>();
+            var stack = new Stack<T>();
+            var outputStack = new Stack<T>();
             stack.Push(node);
             while (stack.Count > 0)
             {
@@ -47,14 +47,14 @@ namespace EasyTree.Iterators
                 outputStack.Push(currentNode);
                 for (int i = 0; i < currentNode.Children.Count; i++)
                 {
-                    stack.Push(currentNode.Children[i]);
+                    stack.Push((T)currentNode.Children[i]);
                 }
             }
 
             while (outputStack.Count > 0)
             {
                 _nodelist.Add(outputStack.Pop());
-                function(node);
+                action.Invoke(node);
             }
         }
     }

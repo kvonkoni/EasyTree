@@ -1,24 +1,23 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace EasyTree.Iterators
 {
-    internal class PreOrderIterator : IteratorBase
+    internal class PreOrderIterator<T> : IteratorBase<T> where T : Node
     {
-        public PreOrderIterator(Node node) : base(node)
+        public PreOrderIterator(T node) : base(node)
         {
             PreOrder(_node);
         }
 
-        public PreOrderIterator(Node node, PerformFunction function) : base(node)
+        public PreOrderIterator(T node, Action<T> action) : base(node)
         {
-            PreOrder(_node, function);
+            PreOrder(_node, action);
         }
 
-        private void PreOrder(Node node)
+        private void PreOrder(T node)
         {
-            var stack = new Stack<Node>();
+            var stack = new Stack<T>();
             stack.Push(node);
             while (stack.Count > 0)
             {
@@ -26,14 +25,14 @@ namespace EasyTree.Iterators
                 _nodelist.Add(currentNode);
                 for (int i=currentNode.Children.Count-1; i >= 0; i--)
                 {
-                    stack.Push(currentNode.Children[i]);
+                    stack.Push((T)currentNode.Children[i]);
                 }
             }
         }
 
-        private void PreOrder(Node node, PerformFunction function)
+        private void PreOrder(T node, Action<T> function)
         {
-            var stack = new Stack<Node>();
+            var stack = new Stack<T>();
             stack.Push(node);
             while (stack.Count > 0)
             {
@@ -42,7 +41,7 @@ namespace EasyTree.Iterators
                 function(currentNode);
                 for (int i = currentNode.Children.Count - 1; i >= 0; i--)
                 {
-                    stack.Push(currentNode.Children[i]);
+                    stack.Push((T)currentNode.Children[i]);
                 }
             }
         }
