@@ -8,12 +8,24 @@ namespace EasyTree
 {
     public class Node : INotifyPropertyChanged
     {
+        /// <summary>
+        /// Gets the tree's root node.
+        /// </summary>
         public Node Root { get; private set; }
 
+        /// <summary>
+        /// Gets the parent node.
+        /// </summary>
         public Node Parent { get; private set; }
 
+        /// <summary>
+        /// Gets a value indicating whether this is a root node.
+        /// </summary>
         public bool IsRoot { get; private set; }
 
+        /// <summary>
+        /// Gets a value indicating wherther this is a leaf node.
+        /// </summary>
         public bool IsLeaf
         {
             get
@@ -38,14 +50,29 @@ namespace EasyTree
             }
         }
 
+        /// <summary>
+        /// Gets an ordered list representing the path from the root.
+        /// </summary>
         public IReadOnlyList<Node> Path => path;
 
+        /// <summary>
+        /// Gets an ordered list of all the child nodes.
+        /// </summary>
         public IReadOnlyList<Node> Children => children;
 
+        /// <summary>
+        /// Gets an unordered set collection all the leaf nodes.
+        /// </summary>
         public IReadOnlyCollection<Node> Leaves => leaves;
 
+        /// <summary>
+        /// Gets an unordered collection of all the descendant nodes.
+        /// </summary>
         public IReadOnlyCollection<Node> Descendants => descendants;
 
+        /// <summary>
+        /// Occurs when a property has changed.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         private List<Node> path = new List<Node>();
@@ -58,6 +85,9 @@ namespace EasyTree
 
         private bool _isLeaf;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Node"/> class.
+        /// </summary>
         public Node()
         {
             Parent = null;
@@ -67,6 +97,9 @@ namespace EasyTree
             path.Add(this);
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="Node"/> class.
+        /// </summary>
         public Node(Node parent)
         {
             Parent = parent;
@@ -77,6 +110,10 @@ namespace EasyTree
             AddParent(parent);
         }
 
+        /// <summary>
+        /// Adds a child node to the end of the list of children.
+        /// </summary>
+        /// <param name="child"></param>
         public void AddChild(Node child)
         {
             if (path.Contains(child))
@@ -112,8 +149,15 @@ namespace EasyTree
             }
         }
 
+        /// <summary>
+        /// Removes a child node from the list of children.
+        /// </summary>
+        /// <param name="child"></param>
         public void RemoveChild(Node child)
         {
+            if (!children.Contains(child))
+                throw new NodeException("Node is not in list of children.");
+
             HashSet<Node>.Enumerator lEnum = child.leaves.GetEnumerator();
             while (lEnum.MoveNext())
             {
@@ -145,28 +189,47 @@ namespace EasyTree
             child.IsRoot = true;
         }
 
+        /// <summary>
+        /// Adds a parent node.
+        /// </summary>
+        /// <param name="parent"></param>
         public void AddParent(Node parent)
         {
             parent.AddChild(this);
         }
 
+        /// <summary>
+        /// Removes a parent node.
+        /// </summary>
         public void RemoveParent()
         {
             Parent.RemoveChild(this);
         }
 
+        /// <summary>
+        /// Gets a pre-order iterator of all nodes in the tree.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Node> GetPreOrderIterator()
         {
             foreach (var node in new PreOrderIterator(this))
                 yield return node;
         }
 
+        /// <summary>
+        /// Gets a post order iterator of all nodes in the tree.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Node> GetPostOrderIterator()
         {
             foreach (var node in new PostOrderIterator(this))
                 yield return node;
         }
 
+        /// <summary>
+        /// Gets a level-order iterator of all nodes in the tree.
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<Node> GetLevelOrderIterator()
         {
             foreach (var node in new LevelOrderIterator(this))
