@@ -88,7 +88,7 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:EasyTree.Node.GetPreOrderIterator``1(System.Action{``0})">
+        <member name="M:EasyTree.Node.GetPreOrderIterator``1(System.Action{``0},System.Action{``0})">
             <summary>
             Gets a pre-order iterator of all nodes in the tree and invoke action.
             </summary>

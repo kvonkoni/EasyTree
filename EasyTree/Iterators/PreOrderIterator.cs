@@ -30,7 +30,7 @@ namespace EasyTree.Iterators
             }
         }
 
-        private void PreOrder(T node, Action<T> function)
+        private void PreOrder(T node, Action<T> action)
         {
             var stack = new Stack<T>();
             stack.Push(node);
@@ -38,7 +38,8 @@ namespace EasyTree.Iterators
             {
                 var currentNode = stack.Pop();
                 _nodelist.Add(currentNode);
-                function(currentNode);
+                action.Invoke(currentNode);
+
                 for (int i = currentNode.Children.Count - 1; i >= 0; i--)
                 {
                     stack.Push((T)currentNode.Children[i]);
