@@ -36,9 +36,9 @@ namespace EasyTree.XUnitTests
             Assert.True(childC.IsLeaf);
 
             // Making sure each node's set of descendants is correct
-            Assert.Equal(new HashSet<Node>() { childA, childB, childC }, root.Descendants);
-            Assert.Equal(new HashSet<Node>() { childB, childC }, childA.Descendants);
-            Assert.Equal(new HashSet<Node>() { childC }, childB.Descendants);
+            Assert.True(new HashSet<Node>() { childA, childB, childC }.SetEquals(root.Descendants));
+            Assert.True(new HashSet<Node>() { childB, childC }.SetEquals(childA.Descendants));
+            Assert.True(new HashSet<Node>() { childC }.SetEquals(childB.Descendants));
             Assert.Empty(childC.Descendants);
 
             // Making sure each node's path list is correct
@@ -119,15 +119,15 @@ namespace EasyTree.XUnitTests
             Assert.True(child2AchildB.IsLeaf);
 
             // Making sure each node's set of descendants is correct
-            Assert.Equal(new HashSet<Node> { tree1, child1A, child1B, child1C, tree2, child2A, child2B, child2AchildA, child2AchildB }, root.Descendants);
+            Assert.True(new HashSet<Node> { tree1, child1A, child1B, child1C, tree2, child2A, child2B, child2AchildA, child2AchildB }.SetEquals(root.Descendants));
             
-            Assert.Equal(new HashSet<Node> { child1A, child1B, child1C }, tree1.Descendants);
-            Assert.Equal(new HashSet<Node> { child1B, child1C }, child1A.Descendants);
-            Assert.Equal(new HashSet<Node> { child1C }, child1B.Descendants);
+            Assert.True(new HashSet<Node> { child1A, child1B, child1C }.SetEquals(tree1.Descendants));
+            Assert.True(new HashSet<Node> { child1B, child1C }.SetEquals(child1A.Descendants));
+            Assert.True(new HashSet<Node> { child1C }.SetEquals(child1B.Descendants));
             Assert.Empty(child1C.Descendants);
 
-            Assert.Equal(new HashSet<Node> { child2A, child2B, child2AchildA, child2AchildB }, tree2.Descendants);
-            Assert.Equal(new HashSet<Node> { child2AchildA, child2AchildB }, child2A.Descendants);
+            Assert.True(new HashSet<Node> { child2A, child2B, child2AchildA, child2AchildB }.SetEquals(tree2.Descendants));
+            Assert.True(new HashSet<Node> { child2AchildA, child2AchildB }.SetEquals(child2A.Descendants));
             Assert.Empty(child2B.Descendants);
             Assert.Empty(child2AchildA.Descendants);
             Assert.Empty(child2AchildB.Descendants);
@@ -190,7 +190,7 @@ namespace EasyTree.XUnitTests
             Assert.Equal(root, childA.Root);
 
             // Making sure each node's set of descendants is correct
-            Assert.Equal(new HashSet<Node>() { childA }, root.Descendants);
+            Assert.True(new HashSet<Node>() { childA }.SetEquals(root.Descendants));
             Assert.Empty(childA.Descendants);
 
             // Making sure each node's path list is correct
@@ -210,7 +210,7 @@ namespace EasyTree.XUnitTests
             Assert.Equal(childB, childC.Root);
 
             // Making sure each node's set of descendants is correct
-            Assert.Equal(new HashSet<Node>() { childC }, childB.Descendants);
+            Assert.True(new HashSet<Node>() { childC }.SetEquals(childB.Descendants));
             Assert.Empty(childC.Descendants);
 
             // Making sure each node's path list is correct
