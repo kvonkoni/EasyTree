@@ -212,7 +212,7 @@ namespace EasyTree
         /// </summary>
         public IReadOnlyCollection<Node> GetDescendants()
         {
-            return Enumerable.ToArray(new PreOrderIterator(this));
+            return Enumerable.ToArray(new PreOrderIterator(this, false));
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace EasyTree
         /// </summary>
         public IReadOnlyCollection<Node> GetLeaves()
         {
-            return Enumerable.ToList(new PreOrderIterator(this)).FindAll(x => x.IsLeaf);
+            return Enumerable.ToList(new PreOrderIterator(this, false)).FindAll(x => x.IsLeaf);
         }
 
         /// <summary>
