@@ -53,9 +53,9 @@ namespace EasyTree
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private List<Node> path = new List<Node>();
-
         private readonly List<Node> children = new List<Node>(1000);
+
+        private List<Node> path = new List<Node>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Node"/> class.
