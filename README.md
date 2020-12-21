@@ -66,9 +66,9 @@ IReadOnlyCollection<Node> GetDescendants()
 IReadOnlyCollection<Node> GetLeaves()
 ```
 
-### Features
+### Instance Properties
 
-Node objects also feature the following convenient properties:
+Nodes feature the following convenient properties:
 ```cs
 // The node's parent
 Node Parent { get; }
@@ -88,8 +88,6 @@ bool IsLeaf { get; }
 // True if the node is a root
 bool IsRoot { get; }
 ```
-
-You can inherit from this class to create your own tree-like class.
 
 ## Usage
 
