@@ -212,7 +212,7 @@ namespace EasyTree
         /// </summary>
         public IReadOnlyCollection<Node> GetDescendants()
         {
-            return Enumerable.ToArray(GetPreOrderIterator());
+            return Enumerable.ToArray(new PreOrderIterator(this));
         }
 
         /// <summary>
@@ -220,7 +220,7 @@ namespace EasyTree
         /// </summary>
         public IReadOnlyCollection<Node> GetLeaves()
         {
-            return Enumerable.ToList(GetPreOrderIterator()).FindAll(x => x.IsLeaf);
+            return Enumerable.ToList(new PreOrderIterator(this)).FindAll(x => x.IsLeaf);
         }
 
         /// <summary>
@@ -229,8 +229,7 @@ namespace EasyTree
         /// <returns></returns>
         public IEnumerable<Node> GetPreOrderIterator()
         {
-            foreach (var node in new PreOrderIterator(this))
-                yield return node;
+            return new PreOrderIterator(this);
         }
 
         /// <summary>
@@ -239,8 +238,7 @@ namespace EasyTree
         /// <returns></returns>
         public IEnumerable<Node> GetPostOrderIterator()
         {
-            foreach (var node in new PostOrderIterator(this))
-                yield return node;
+            return new PostOrderIterator(this);
         }
 
         /// <summary>
@@ -249,8 +247,7 @@ namespace EasyTree
         /// <returns></returns>
         public IEnumerable<Node> GetLevelOrderIterator()
         {
-            foreach (var node in new LevelOrderIterator(this))
-                yield return node;
+            return new LevelOrderIterator(this);
         }
 
         private void AddDescendant(Node descendant)
