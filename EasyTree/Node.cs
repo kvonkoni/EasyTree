@@ -220,7 +220,7 @@ namespace EasyTree
         /// </summary>
         public IReadOnlyCollection<Node> GetLeaves()
         {
-            return Enumerable.ToList(new PreOrderIterator(this, false)).FindAll(x => x.IsLeaf);
+            return Enumerable.ToList(new PreOrderIterator(this)).FindAll(x => x.IsLeaf);
         }
 
         /// <summary>
