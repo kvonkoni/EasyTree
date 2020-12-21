@@ -31,23 +31,7 @@ namespace EasyTree
         {
             get
             {
-                return _isLeaf;
-            }
-            private set
-            {
-                if (_isLeaf != value)
-                {
-                    _isLeaf = value;
-                    if (_isLeaf)
-                    {
-                        AddLeaf(this);
-                    }
-                    else
-                    {
-                        RemoveLeaf(this);
-                    }
-                    NotifyPropertyChanged("IsLeaf");
-                }
+                return Children.Count == 0;
             }
         }
 
@@ -84,8 +68,6 @@ namespace EasyTree
 
         private HashSet<Node> descendants = new HashSet<Node>();
 
-        private bool _isLeaf;
-
         /// <summary>
         /// Initializes a new instance of the <see cref="Node"/> class.
         /// </summary>
@@ -93,7 +75,6 @@ namespace EasyTree
         {
             Parent = null;
             IsRoot = true;
-            IsLeaf = true;
             Root = this;
             path.Add(this);
         }
@@ -105,7 +86,6 @@ namespace EasyTree
         {
             Parent = parent;
             IsRoot = false;
-            IsLeaf = true;
             Root = this;
             path.Add(this);
             AddParent(parent);
@@ -132,11 +112,6 @@ namespace EasyTree
                 AddDescendant(dEnum.Current);
             }
             AddDescendant(child);
-            
-            if (IsLeaf)
-            {
-                IsLeaf = false;
-            }
 
             if (child.IsRoot)
             {
@@ -183,10 +158,6 @@ namespace EasyTree
                 node.RedeterminePaths();
             }
             
-            if (children.Count == 0)
-            {
-                IsLeaf = true;
-            }
             child.IsRoot = true;
         }
 
