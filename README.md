@@ -18,16 +18,16 @@ You can construct a tree by creating each node and passing in its parent as para
 
 ```cs
 // Adds a child node to an existing node
-public void AddChild(Node child){...}
+void AddChild(Node child)
 
 // Removes a child node
-public void RemoveChild(Node child){...}
+void RemoveChild(Node child)
 
 // Adds a parent to an existing node
-public void AddParent(Node parent){...}
+void AddParent(Node parent)
 
 // Removes a parent and makes the node a root
-public void RemoveParent(Node parent){...}
+void RemoveParent(Node parent)
 ```
 
 ### Searching your Tree
@@ -54,33 +54,39 @@ foreach (Node element in myNode.GetLevelOrderIterator())
 }
 ```
 
+### Instance Methods
+
+In addition to the iterator methods, a Node has the following methods.
+
+```cs
+// Gets a collection of the descendants of the current node.
+IReadOnlyCollection<Node> GetDescendants()
+
+// Gets a collection of the tree's leaves, with the current node as root.
+IReadOnlyCollection<Node> GetLeaves()
+```
+
 ### Features
 
 Node objects also feature the following convenient properties:
 ```cs
 // The node's parent
-public Node Parent { get; }
+Node Parent { get; }
 
 // The node's root
-public Node Root { get; }
+Node Root { get; }
 
 // The full path from the node back to the root
-public List<Node> Path { get; }
+IReadOnlyList<Node> Path { get; }
 
 // List of the node's children in chronological order (the order you added them)
-public List<Node> Children { get; }
-
-// HashSet (unordered) of the node's leaves
-public HashSet<Node> Leaves { get; }
-
-// HashSet (unordered) of the node's descendants
-public HashSet<Node> Descendants { get; }
+IReadOnlyList<Node> Children { get; }
 
 // True if the node is a leaf
-public bool IsLeaf { get; }
+bool IsLeaf { get; }
 
 // True if the node is a root
-public bool IsRoot { get; }
+bool IsRoot { get; }
 ```
 
 You can inherit from this class to create your own tree-like class.
