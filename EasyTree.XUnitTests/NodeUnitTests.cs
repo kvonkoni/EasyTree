@@ -152,7 +152,7 @@ namespace EasyTree.XUnitTests
         {
             var node = new Node();
 
-            Assert.Throws<TreeStructureException>(() => node.AddChild(node));
+            Assert.Throws<InvalidTreeException>(() => node.AddChild(node));
         }
 
         [Fact]
@@ -163,7 +163,7 @@ namespace EasyTree.XUnitTests
 
             nodeA.AddChild(nodeB);
 
-            Assert.Throws<TreeStructureException>(() => nodeB.AddChild(nodeA));
+            Assert.Throws<InvalidTreeException>(() => nodeB.AddChild(nodeA));
         }
 
         [Fact]

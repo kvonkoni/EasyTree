@@ -117,7 +117,7 @@ namespace EasyTree
         public void AddChild(Node child)
         {
             if (path.Contains(child))
-                throw new TreeStructureException("The child node is in its parent's path. A tree cannot contain a loop.");
+                throw new InvalidTreeException("The child node is in its parent's path. A tree cannot contain a loop.");
 
             children.Add(child);
             NotifyPropertyChanged("Children");
