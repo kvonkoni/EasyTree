@@ -30,6 +30,30 @@ void AddParent(Node parent)
 void RemoveParent(Node parent)
 ```
 
+### Properties
+
+The Node class features the following convenient properties.
+
+```cs
+// The node's parent
+Node Parent { get; }
+
+// The node's root
+Node Root { get; }
+
+// The full path from the node back to the root
+IReadOnlyList<Node> Path { get; }
+
+// List of the node's children in chronological order (the order you added them)
+IReadOnlyList<Node> Children { get; }
+
+// True if the node is a leaf
+bool IsLeaf { get; }
+
+// True if the node is a root
+bool IsRoot { get; }
+```
+
 ### Searching your Tree
 
 You can iterate through the descendants of any node by using any of the following methods, which return IEnumerator<Node>.
@@ -54,9 +78,9 @@ foreach (Node element in myNode.GetLevelOrderIterator())
 }
 ```
 
-### Instance Methods
+### Other Methods
 
-In addition to the iterator methods, a Node has the following methods.
+In addition to the methods above for creating and iterating through a tree, the Node class has a number of methods to make navigating the tree easier.
 
 ```cs
 // Gets a collection of the descendants of the current node.
@@ -64,29 +88,6 @@ IReadOnlyCollection<Node> GetDescendants()
 
 // Gets a collection of the tree's leaves, with the current node as root.
 IReadOnlyCollection<Node> GetLeaves()
-```
-
-### Instance Properties
-
-Nodes feature the following convenient properties:
-```cs
-// The node's parent
-Node Parent { get; }
-
-// The node's root
-Node Root { get; }
-
-// The full path from the node back to the root
-IReadOnlyList<Node> Path { get; }
-
-// List of the node's children in chronological order (the order you added them)
-IReadOnlyList<Node> Children { get; }
-
-// True if the node is a leaf
-bool IsLeaf { get; }
-
-// True if the node is a root
-bool IsRoot { get; }
 ```
 
 ## Usage
