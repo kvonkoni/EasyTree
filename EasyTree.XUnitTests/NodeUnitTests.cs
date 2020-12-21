@@ -262,11 +262,7 @@ namespace EasyTree.XUnitTests
             var gChild3 = new Node(childC);
             var gChild4 = new Node(childC);
 
-            var preOrder = new List<Node>();
-            foreach (Node node in root.GetPreOrderIterator())
-            {
-                preOrder.Add(node);
-            }
+            var preOrder = new List<Node>(root.GetPreOrderIterator());
 
             var expected = new List<Node>()
             {
@@ -291,11 +287,7 @@ namespace EasyTree.XUnitTests
             var gChild3 = new Node(childC);
             var gChild4 = new Node(childC);
 
-            var postOrder = new List<Node>();
-            foreach (Node node in root.GetPostOrderIterator())
-            {
-                postOrder.Add(node);
-            }
+            var postOrder = new List<Node>(root.GetPostOrderIterator());
 
             var expected = new List<Node>()
             {
@@ -320,11 +312,7 @@ namespace EasyTree.XUnitTests
             var gChild3 = new Node(childC);
             var gChild4 = new Node(childC);
 
-            var levelOrder = new List<Node>();
-            foreach (Node node in root.GetLevelOrderIterator())
-            {
-                levelOrder.Add(node);
-            }
+            var levelOrder = new List<Node>(root.GetLevelOrderIterator());
 
             var expected = new List<Node>()
             {
