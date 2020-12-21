@@ -7,6 +7,9 @@ using EasyTree.Iterators;
 
 namespace EasyTree
 {
+    /// <summary>
+    /// The <c>Node</c> class. Nodes are connected together to form a tree.
+    /// </summary>
     public class Node : INotifyPropertyChanged
     {
         /// <summary>
@@ -25,7 +28,7 @@ namespace EasyTree
         public bool IsRoot { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating wherther this is a leaf node.
+        /// Gets a value indicating whether this is a leaf node.
         /// </summary>
         public bool IsLeaf
         {
