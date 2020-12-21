@@ -3,22 +3,25 @@ using System.Collections.Generic;
 
 namespace EasyTree.Iterators
 {
-    internal class LevelOrderIterator : IteratorBase
+    internal class LevelOrderIterator : IteratorBase, IEnumerable<Node>
     {
-        public LevelOrderIterator(Node node) : base(node)
+        public LevelOrderIterator(Node node, bool includeRoot = true) : base(node)
         {
-            LevelOrder(_node);
+            LevelOrder(_node, includeRoot);
         }
 
-        public LevelOrderIterator(Node node, PerformFunction function) : base(node)
+        public LevelOrderIterator(Node node, PerformFunction function, bool includeRoot = true) : base(node)
         {
-            LevelOrder(_node, function);
+            LevelOrder(_node, function, includeRoot);
         }
 
-        private void LevelOrder(Node node)
+        private void LevelOrder(Node node, bool includeRoot)
         {
             var queue = new Queue<Node>();
-            _nodelist.Add(node);
+            
+            if (includeRoot)
+                _nodelist.Add(node);
+            
             queue.Enqueue(node);
             while (queue.Count > 0)
             {
@@ -30,10 +33,13 @@ namespace EasyTree.Iterators
             }
         }
 
-        private void LevelOrder(Node node, PerformFunction function)
+        private void LevelOrder(Node node, PerformFunction function, bool includeRoot)
         {
             var queue = new Queue<Node>();
-            _nodelist.Add(node);
+            
+            if (includeRoot)
+                _nodelist.Add(node);
+            
             function(node);
             queue.Enqueue(node);
             while (queue.Count > 0)

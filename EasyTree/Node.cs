@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using EasyTree.Iterators;
 
 namespace EasyTree
 {
+    /// <summary>
+    /// The <c>Node</c> class. Nodes are connected together to form a tree.
+    /// </summary>
     public class Node : INotifyPropertyChanged
     {
         /// <summary>
@@ -24,29 +28,13 @@ namespace EasyTree
         public bool IsRoot { get; private set; }
 
         /// <summary>
-        /// Gets a value indicating wherther this is a leaf node.
+        /// Gets a value indicating whether this is a leaf node.
         /// </summary>
         public bool IsLeaf
         {
             get
             {
-                return _isLeaf;
-            }
-            private set
-            {
-                if (_isLeaf != value)
-                {
-                    _isLeaf = value;
-                    if (_isLeaf)
-                    {
-                        AddLeaf(this);
-                    }
-                    else
-                    {
-                        RemoveLeaf(this);
-                    }
-                    NotifyPropertyChanged("IsLeaf");
-                }
+                return Children.Count == 0;
             }
         }
 
@@ -61,29 +49,13 @@ namespace EasyTree
         public IReadOnlyList<Node> Children => children;
 
         /// <summary>
-        /// Gets an unordered set collection all the leaf nodes.
-        /// </summary>
-        public IReadOnlyCollection<Node> Leaves => leaves;
-
-        /// <summary>
-        /// Gets an unordered collection of all the descendant nodes.
-        /// </summary>
-        public IReadOnlyCollection<Node> Descendants => descendants;
-
-        /// <summary>
         /// Occurs when a property has changed.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private List<Node> path = new List<Node>();
+        private List<Node> path = new List<Node>(100);
 
-        private List<Node> children = new List<Node>();
-
-        private HashSet<Node> leaves = new HashSet<Node>();
-
-        private HashSet<Node> descendants = new HashSet<Node>();
-
-        private bool _isLeaf;
+        private List<Node> children = new List<Node>(1000);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Node"/> class.
@@ -92,7 +64,6 @@ namespace EasyTree
         {
             Parent = null;
             IsRoot = true;
-            IsLeaf = true;
             Root = this;
             path.Add(this);
         }
@@ -104,7 +75,6 @@ namespace EasyTree
         {
             Parent = parent;
             IsRoot = false;
-            IsLeaf = true;
             Root = this;
             path.Add(this);
             AddParent(parent);
@@ -114,28 +84,17 @@ namespace EasyTree
         /// Adds a child node to the end of the list of children.
         /// </summary>
         /// <param name="child"></param>
+        /// <exception cref="InvalidTreeException">Thrown when the operation would result in an invalid tree structure.</exception>
         public void AddChild(Node child)
         {
             if (path.Contains(child))
-                throw new TreeStructureException("The child node is in its parent's path. A tree cannot contain a loop.");
+                throw new InvalidTreeException("The child node is in its parent's path. A tree cannot contain a loop.");
 
             children.Add(child);
             NotifyPropertyChanged("Children");
             
             child.Parent = this;
             child.NotifyPropertyChanged("Parent");
-
-            HashSet<Node>.Enumerator dEnum = child.descendants.GetEnumerator();
-            while (dEnum.MoveNext())
-            {
-                AddDescendant(dEnum.Current);
-            }
-            AddDescendant(child);
-            
-            if (IsLeaf)
-            {
-                IsLeaf = false;
-            }
 
             if (child.IsRoot)
             {
@@ -153,23 +112,11 @@ namespace EasyTree
         /// Removes a child node from the list of children.
         /// </summary>
         /// <param name="child"></param>
+        /// <exception cref="NodeException">Thrown when the node is not in the children list.</exception>
         public void RemoveChild(Node child)
         {
             if (!children.Contains(child))
                 throw new NodeException("Node is not in list of children.");
-
-            HashSet<Node>.Enumerator lEnum = child.leaves.GetEnumerator();
-            while (lEnum.MoveNext())
-            {
-                RemoveLeaf(lEnum.Current);
-            }
-
-            HashSet<Node>.Enumerator dEnum = child.descendants.GetEnumerator();
-            while (dEnum.MoveNext())
-            {
-                RemoveDescendant(dEnum.Current);
-            }
-            RemoveDescendant(child);
 
             child.Parent = null;
             child.NotifyPropertyChanged("Parent");
@@ -182,10 +129,6 @@ namespace EasyTree
                 node.RedeterminePaths();
             }
             
-            if (children.Count == 0)
-            {
-                IsLeaf = true;
-            }
             child.IsRoot = true;
         }
 
@@ -207,13 +150,28 @@ namespace EasyTree
         }
 
         /// <summary>
+        /// Returns a read-only collection of all the current node's descendants.
+        /// </summary>
+        public IReadOnlyCollection<Node> GetDescendants()
+        {
+            return Enumerable.ToArray(new PreOrderIterator(this, false));
+        }
+
+        /// <summary>
+        /// Returns a read-only collection of all the current node's leaves.
+        /// </summary>
+        public IReadOnlyCollection<Node> GetLeaves()
+        {
+            return Enumerable.ToList(new PreOrderIterator(this)).FindAll(x => x.IsLeaf);
+        }
+
+        /// <summary>
         /// Gets a pre-order iterator of all nodes in the tree.
         /// </summary>
         /// <returns></returns>
         public IEnumerable<Node> GetPreOrderIterator()
         {
-            foreach (var node in new PreOrderIterator(this))
-                yield return node;
+            return new PreOrderIterator(this);
         }
 
         /// <summary>
@@ -222,8 +180,7 @@ namespace EasyTree
         /// <returns></returns>
         public IEnumerable<Node> GetPostOrderIterator()
         {
-            foreach (var node in new PostOrderIterator(this))
-                yield return node;
+            return new PostOrderIterator(this);
         }
 
         /// <summary>
@@ -232,53 +189,7 @@ namespace EasyTree
         /// <returns></returns>
         public IEnumerable<Node> GetLevelOrderIterator()
         {
-            foreach (var node in new LevelOrderIterator(this))
-                yield return node;
-        }
-
-        private void AddDescendant(Node descendant)
-        {
-            descendants.Add(descendant);
-            NotifyPropertyChanged("Descendants");
-
-            if (Parent != null)
-            {
-                Parent.AddDescendant(descendant);
-            }
-        }
-
-        private void RemoveDescendant(Node descendant)
-        {
-            descendants.Remove(descendant);
-            NotifyPropertyChanged("Descendants");
-            
-            if (Parent != null)
-            {
-                Parent.RemoveDescendant(descendant);
-            }
-        }
-
-        private void AddLeaf(Node leaf)
-        {
-            leaves.Add(leaf);
-            NotifyPropertyChanged("Leaves");
-            
-            if (Parent != null)
-            {
-                Parent.AddLeaf(leaf);
-            }
-        }
-
-        private void RemoveLeaf(Node leaf)
-        {
-            leaves.Remove(leaf);
-            NotifyPropertyChanged("Leaves");
-            
-            if (Parent != null)
-            {
-                Parent.RemoveLeaf(leaf);
-            }
-
+            return new LevelOrderIterator(this);
         }
 
         private void RedeterminePaths()

@@ -10,42 +10,87 @@ namespace EasyTree.XUnitTests
         {
             var root = new Node();
             var childA = new Node();
-            var childB = new Node();
-            var childC = new Node();
+            var childAchildA = new Node();
+            var childAchildB = new Node();
+            var childAchildBchildA = new Node();
 
             root.AddChild(childA);
-            childA.AddChild(childB);
-            childB.AddChild(childC);
+            childA.AddChild(childAchildA);
+            childA.AddChild(childAchildB);
+            childAchildB.AddChild(childAchildBchildA);
 
             // Making sure only 'root' is a root
             Assert.True(root.IsRoot);
             Assert.False(childA.IsRoot);
-            Assert.False(childB.IsRoot);
-            Assert.False(childC.IsRoot);
+            Assert.False(childAchildA.IsRoot);
+            Assert.False(childAchildB.IsRoot);
+            Assert.False(childAchildBchildA.IsRoot);
 
             // Making sure each node's root is 'root'
             Assert.Equal(root, root.Root);
             Assert.Equal(root, childA.Root);
-            Assert.Equal(root, childB.Root);
-            Assert.Equal(root, childC.Root);
+            Assert.Equal(root, childAchildA.Root);
+            Assert.Equal(root, childAchildB.Root);
+            Assert.Equal(root, childAchildBchildA.Root);
 
-            // Making sure only 'childC' is a leaf
+            // Making sure only 'childAchildA' and 'childC' are leaves
             Assert.False(root.IsLeaf);
             Assert.False(childA.IsLeaf);
-            Assert.False(childB.IsLeaf);
-            Assert.True(childC.IsLeaf);
-
-            // Making sure each node's set of descendants is correct
-            Assert.True(new HashSet<Node>() { childA, childB, childC }.SetEquals(root.Descendants));
-            Assert.True(new HashSet<Node>() { childB, childC }.SetEquals(childA.Descendants));
-            Assert.True(new HashSet<Node>() { childC }.SetEquals(childB.Descendants));
-            Assert.Empty(childC.Descendants);
+            Assert.True(childAchildA.IsLeaf);
+            Assert.False(childAchildB.IsLeaf);
+            Assert.True(childAchildBchildA.IsLeaf);
 
             // Making sure each node's path list is correct
-            Assert.Equal(new List<Node>() { root }, root.Path);
-            Assert.Equal(new List<Node>() { root, childA }, childA.Path);
-            Assert.Equal(new List<Node>() { root, childA, childB }, childB.Path);
-            Assert.Equal(new List<Node>() { root, childA, childB, childC }, childC.Path);
+            Assert.Equal(new List<Node> { root }, root.Path);
+            Assert.Equal(new List<Node> { root, childA }, childA.Path);
+            Assert.Equal(new List<Node> { root, childA, childAchildA }, childAchildA.Path);
+            Assert.Equal(new List<Node> { root, childA, childAchildB }, childAchildB.Path);
+            Assert.Equal(new List<Node> { root, childA, childAchildB, childAchildBchildA }, childAchildBchildA.Path);
+        }
+
+        [Fact]
+        public void Test_GetDescendants_ValidTree_DescendantsCorrect()
+        {
+            var root = new Node();
+            var childA = new Node();
+            var childAchildA = new Node();
+            var childAchildB = new Node();
+            var childAchildBchildA = new Node();
+
+            root.AddChild(childA);
+            childA.AddChild(childAchildA);
+            childA.AddChild(childAchildB);
+            childAchildB.AddChild(childAchildBchildA);
+
+            // Making sure each node's set of descendants is correct
+            Assert.True(new HashSet<Node>() { childA, childAchildA, childAchildB, childAchildBchildA }.SetEquals(root.GetDescendants()));
+            Assert.True(new HashSet<Node>() { childAchildA, childAchildB, childAchildBchildA }.SetEquals(childA.GetDescendants()));
+            Assert.Empty(childAchildA.GetDescendants());
+            Assert.True(new HashSet<Node>() { childAchildBchildA }.SetEquals(childAchildB.GetDescendants()));
+            Assert.Empty(childAchildBchildA.GetDescendants());
+        }
+
+        [Fact]
+        public void Test_GetLeaves_ValidTree_LeavesCorrect()
+        {
+            var root = new Node();
+            var childA = new Node();
+            var childB = new Node();
+            var childAchildA = new Node();
+            var childAchildB = new Node();
+            var childAchildBchildA = new Node();
+
+            root.AddChild(childA);
+            root.AddChild(childB);
+            childA.AddChild(childAchildA);
+            childA.AddChild(childAchildB);
+            childAchildB.AddChild(childAchildBchildA);
+
+            Assert.True(new HashSet<Node> { childB, childAchildA, childAchildBchildA }.SetEquals(root.GetLeaves()));
+            Assert.True(new HashSet<Node> { childAchildA, childAchildBchildA }.SetEquals(childA.GetLeaves()));
+            Assert.True(new HashSet<Node> { childB }.SetEquals(childB.GetLeaves()));
+            Assert.True(new HashSet<Node> { childAchildA }.SetEquals(childAchildA.GetLeaves()));
+            Assert.True(new HashSet<Node> { childAchildBchildA }.SetEquals(childAchildB.GetLeaves()));
         }
 
         [Fact]
@@ -119,18 +164,18 @@ namespace EasyTree.XUnitTests
             Assert.True(child2AchildB.IsLeaf);
 
             // Making sure each node's set of descendants is correct
-            Assert.True(new HashSet<Node> { tree1, child1A, child1B, child1C, tree2, child2A, child2B, child2AchildA, child2AchildB }.SetEquals(root.Descendants));
+            Assert.True(new HashSet<Node> { tree1, child1A, child1B, child1C, tree2, child2A, child2B, child2AchildA, child2AchildB }.SetEquals(root.GetDescendants()));
             
-            Assert.True(new HashSet<Node> { child1A, child1B, child1C }.SetEquals(tree1.Descendants));
-            Assert.True(new HashSet<Node> { child1B, child1C }.SetEquals(child1A.Descendants));
-            Assert.True(new HashSet<Node> { child1C }.SetEquals(child1B.Descendants));
-            Assert.Empty(child1C.Descendants);
+            Assert.True(new HashSet<Node> { child1A, child1B, child1C }.SetEquals(tree1.GetDescendants()));
+            Assert.True(new HashSet<Node> { child1B, child1C }.SetEquals(child1A.GetDescendants()));
+            Assert.True(new HashSet<Node> { child1C }.SetEquals(child1B.GetDescendants()));
+            Assert.Empty(child1C.GetDescendants());
 
-            Assert.True(new HashSet<Node> { child2A, child2B, child2AchildA, child2AchildB }.SetEquals(tree2.Descendants));
-            Assert.True(new HashSet<Node> { child2AchildA, child2AchildB }.SetEquals(child2A.Descendants));
-            Assert.Empty(child2B.Descendants);
-            Assert.Empty(child2AchildA.Descendants);
-            Assert.Empty(child2AchildB.Descendants);
+            Assert.True(new HashSet<Node> { child2A, child2B, child2AchildA, child2AchildB }.SetEquals(tree2.GetDescendants()));
+            Assert.True(new HashSet<Node> { child2AchildA, child2AchildB }.SetEquals(child2A.GetDescendants()));
+            Assert.Empty(child2B.GetDescendants());
+            Assert.Empty(child2AchildA.GetDescendants());
+            Assert.Empty(child2AchildB.GetDescendants());
 
             // Making sure each node's path list is correct
             Assert.Equal(new List<Node> { root }, root.Path);
@@ -152,7 +197,7 @@ namespace EasyTree.XUnitTests
         {
             var node = new Node();
 
-            Assert.Throws<TreeStructureException>(() => node.AddChild(node));
+            Assert.Throws<InvalidTreeException>(() => node.AddChild(node));
         }
 
         [Fact]
@@ -163,7 +208,7 @@ namespace EasyTree.XUnitTests
 
             nodeA.AddChild(nodeB);
 
-            Assert.Throws<TreeStructureException>(() => nodeB.AddChild(nodeA));
+            Assert.Throws<InvalidTreeException>(() => nodeB.AddChild(nodeA));
         }
 
         [Fact]
@@ -190,8 +235,8 @@ namespace EasyTree.XUnitTests
             Assert.Equal(root, childA.Root);
 
             // Making sure each node's set of descendants is correct
-            Assert.True(new HashSet<Node>() { childA }.SetEquals(root.Descendants));
-            Assert.Empty(childA.Descendants);
+            Assert.True(new HashSet<Node>() { childA }.SetEquals(root.GetDescendants()));
+            Assert.Empty(childA.GetDescendants());
 
             // Making sure each node's path list is correct
             Assert.Equal(new List<Node>() { root }, root.Path);
@@ -210,8 +255,8 @@ namespace EasyTree.XUnitTests
             Assert.Equal(childB, childC.Root);
 
             // Making sure each node's set of descendants is correct
-            Assert.True(new HashSet<Node>() { childC }.SetEquals(childB.Descendants));
-            Assert.Empty(childC.Descendants);
+            Assert.True(new HashSet<Node>() { childC }.SetEquals(childB.GetDescendants()));
+            Assert.Empty(childC.GetDescendants());
 
             // Making sure each node's path list is correct
             Assert.Equal(new List<Node>() { childB }, childB.Path);
@@ -233,11 +278,7 @@ namespace EasyTree.XUnitTests
             var gChild3 = new Node(childC);
             var gChild4 = new Node(childC);
 
-            var preOrder = new List<Node>();
-            foreach (Node node in root.GetPreOrderIterator())
-            {
-                preOrder.Add(node);
-            }
+            var preOrder = new List<Node>(root.GetPreOrderIterator());
 
             var expected = new List<Node>()
             {
@@ -262,11 +303,7 @@ namespace EasyTree.XUnitTests
             var gChild3 = new Node(childC);
             var gChild4 = new Node(childC);
 
-            var postOrder = new List<Node>();
-            foreach (Node node in root.GetPostOrderIterator())
-            {
-                postOrder.Add(node);
-            }
+            var postOrder = new List<Node>(root.GetPostOrderIterator());
 
             var expected = new List<Node>()
             {
@@ -291,11 +328,7 @@ namespace EasyTree.XUnitTests
             var gChild3 = new Node(childC);
             var gChild4 = new Node(childC);
 
-            var levelOrder = new List<Node>();
-            foreach (Node node in root.GetLevelOrderIterator())
-            {
-                levelOrder.Add(node);
-            }
+            var levelOrder = new List<Node>(root.GetLevelOrderIterator());
 
             var expected = new List<Node>()
             {

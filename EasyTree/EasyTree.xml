@@ -4,6 +4,21 @@
         <name>EasyTree</name>
     </assembly>
     <members>
+        <member name="T:EasyTree.EasyTreeException">
+            <summary>
+            Represents errors that occur within the EasyTree class.
+            </summary>
+        </member>
+        <member name="T:EasyTree.InvalidTreeException">
+            <summary>
+            The exception that is thrown when the tree structure is invalid.
+            </summary>
+        </member>
+        <member name="T:EasyTree.Node">
+            <summary>
+            The <c>Node</c> class. Nodes are connected together to form a tree.
+            </summary>
+        </member>
         <member name="P:EasyTree.Node.Root">
             <summary>
             Gets the tree's root node.
@@ -21,7 +36,7 @@
         </member>
         <member name="P:EasyTree.Node.IsLeaf">
             <summary>
-            Gets a value indicating wherther this is a leaf node.
+            Gets a value indicating whether this is a leaf node.
             </summary>
         </member>
         <member name="P:EasyTree.Node.Path">
@@ -32,16 +47,6 @@
         <member name="P:EasyTree.Node.Children">
             <summary>
             Gets an ordered list of all the child nodes.
-            </summary>
-        </member>
-        <member name="P:EasyTree.Node.Leaves">
-            <summary>
-            Gets an unordered set collection all the leaf nodes.
-            </summary>
-        </member>
-        <member name="P:EasyTree.Node.Descendants">
-            <summary>
-            Gets an unordered collection of all the descendant nodes.
             </summary>
         </member>
         <member name="E:EasyTree.Node.PropertyChanged">
@@ -64,12 +69,14 @@
             Adds a child node to the end of the list of children.
             </summary>
             <param name="child"></param>
+            <exception cref="T:EasyTree.InvalidTreeException">Thrown when the operation would result in an invalid tree structure.</exception>
         </member>
         <member name="M:EasyTree.Node.RemoveChild(EasyTree.Node)">
             <summary>
             Removes a child node from the list of children.
             </summary>
             <param name="child"></param>
+            <exception cref="T:EasyTree.NodeException">Thrown when the node is not in the children list.</exception>
         </member>
         <member name="M:EasyTree.Node.AddParent(EasyTree.Node)">
             <summary>
@@ -80,6 +87,16 @@
         <member name="M:EasyTree.Node.RemoveParent">
             <summary>
             Removes a parent node.
+            </summary>
+        </member>
+        <member name="M:EasyTree.Node.GetDescendants">
+            <summary>
+            Returns a read-only collection of all the current node's descendants.
+            </summary>
+        </member>
+        <member name="M:EasyTree.Node.GetLeaves">
+            <summary>
+            Returns a read-only collection of all the current node's leaves.
             </summary>
         </member>
         <member name="M:EasyTree.Node.GetPreOrderIterator">
