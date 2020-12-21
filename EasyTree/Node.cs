@@ -53,9 +53,9 @@ namespace EasyTree
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private List<Node> path = new List<Node>(100);
+        private List<Node> path = new List<Node>();
 
-        private List<Node> children = new List<Node>(1000);
+        private readonly List<Node> children = new List<Node>(1000);
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Node"/> class.
@@ -217,10 +217,7 @@ namespace EasyTree
 
         private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
         {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
