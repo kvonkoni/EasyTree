@@ -46,16 +46,6 @@ namespace EasyTree
         public IReadOnlyList<Node> Children => children;
 
         /// <summary>
-        /// Gets an unordered set collection all the leaf nodes.
-        /// </summary>
-        public IReadOnlyCollection<Node> Leaves => leaves;
-
-        /// <summary>
-        /// Gets an unordered collection of all the descendant nodes.
-        /// </summary>
-        public IReadOnlyCollection<Node> Descendants => descendants;
-
-        /// <summary>
         /// Occurs when a property has changed.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
@@ -63,10 +53,6 @@ namespace EasyTree
         private List<Node> path = new List<Node>();
 
         private List<Node> children = new List<Node>();
-
-        private HashSet<Node> leaves = new HashSet<Node>();
-
-        private HashSet<Node> descendants = new HashSet<Node>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Node"/> class.
@@ -106,13 +92,6 @@ namespace EasyTree
             child.Parent = this;
             child.NotifyPropertyChanged("Parent");
 
-            HashSet<Node>.Enumerator dEnum = child.descendants.GetEnumerator();
-            while (dEnum.MoveNext())
-            {
-                AddDescendant(dEnum.Current);
-            }
-            AddDescendant(child);
-
             if (child.IsRoot)
             {
                 child.IsRoot = false;
@@ -133,19 +112,6 @@ namespace EasyTree
         {
             if (!children.Contains(child))
                 throw new NodeException("Node is not in list of children.");
-
-            HashSet<Node>.Enumerator lEnum = child.leaves.GetEnumerator();
-            while (lEnum.MoveNext())
-            {
-                RemoveLeaf(lEnum.Current);
-            }
-
-            HashSet<Node>.Enumerator dEnum = child.descendants.GetEnumerator();
-            while (dEnum.MoveNext())
-            {
-                RemoveDescendant(dEnum.Current);
-            }
-            RemoveDescendant(child);
 
             child.Parent = null;
             child.NotifyPropertyChanged("Parent");
@@ -219,51 +185,6 @@ namespace EasyTree
         public IEnumerable<Node> GetLevelOrderIterator()
         {
             return new LevelOrderIterator(this);
-        }
-
-        private void AddDescendant(Node descendant)
-        {
-            descendants.Add(descendant);
-            NotifyPropertyChanged("Descendants");
-
-            if (Parent != null)
-            {
-                Parent.AddDescendant(descendant);
-            }
-        }
-
-        private void RemoveDescendant(Node descendant)
-        {
-            descendants.Remove(descendant);
-            NotifyPropertyChanged("Descendants");
-            
-            if (Parent != null)
-            {
-                Parent.RemoveDescendant(descendant);
-            }
-        }
-
-        private void AddLeaf(Node leaf)
-        {
-            leaves.Add(leaf);
-            NotifyPropertyChanged("Leaves");
-            
-            if (Parent != null)
-            {
-                Parent.AddLeaf(leaf);
-            }
-        }
-
-        private void RemoveLeaf(Node leaf)
-        {
-            leaves.Remove(leaf);
-            NotifyPropertyChanged("Leaves");
-            
-            if (Parent != null)
-            {
-                Parent.RemoveLeaf(leaf);
-            }
-
         }
 
         private void RedeterminePaths()

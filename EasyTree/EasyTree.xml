@@ -44,16 +44,6 @@
             Gets an ordered list of all the child nodes.
             </summary>
         </member>
-        <member name="P:EasyTree.Node.Leaves">
-            <summary>
-            Gets an unordered set collection all the leaf nodes.
-            </summary>
-        </member>
-        <member name="P:EasyTree.Node.Descendants">
-            <summary>
-            Gets an unordered collection of all the descendant nodes.
-            </summary>
-        </member>
         <member name="E:EasyTree.Node.PropertyChanged">
             <summary>
             Occurs when a property has changed.
