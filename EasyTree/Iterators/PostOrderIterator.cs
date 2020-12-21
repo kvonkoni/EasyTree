@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EasyTree.Iterators
 {
-    internal class PostOrderIterator : IteratorBase
+    internal class PostOrderIterator : IteratorBase, IEnumerable<Node>
     {
         public PostOrderIterator(Node node) : base(node)
         {

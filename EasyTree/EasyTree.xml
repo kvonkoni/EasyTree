@@ -4,6 +4,16 @@
         <name>EasyTree</name>
     </assembly>
     <members>
+        <member name="T:EasyTree.EasyTreeException">
+            <summary>
+            Represents errors that occur within the EasyTree class.
+            </summary>
+        </member>
+        <member name="T:EasyTree.InvalidTreeException">
+            <summary>
+            The exception that is thrown when the tree structure is invalid.
+            </summary>
+        </member>
         <member name="P:EasyTree.Node.Root">
             <summary>
             Gets the tree's root node.
@@ -80,6 +90,16 @@
         <member name="M:EasyTree.Node.RemoveParent">
             <summary>
             Removes a parent node.
+            </summary>
+        </member>
+        <member name="M:EasyTree.Node.GetDescendants">
+            <summary>
+            Returns a read-only collection of all the current node's descendants.
+            </summary>
+        </member>
+        <member name="M:EasyTree.Node.GetLeaves">
+            <summary>
+            Returns a read-only collection of all the current node's leaves.
             </summary>
         </member>
         <member name="M:EasyTree.Node.GetPreOrderIterator">

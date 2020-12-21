@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace EasyTree.Iterators
 {
-    internal class PreOrderIterator : IteratorBase
+    internal class PreOrderIterator : IteratorBase, IEnumerable<Node>
     {
         public PreOrderIterator(Node node) : base(node)
         {

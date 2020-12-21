@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace EasyTree.Iterators
 {
-    internal class LevelOrderIterator : IteratorBase
+    internal class LevelOrderIterator : IteratorBase, IEnumerable<Node>
     {
         public LevelOrderIterator(Node node) : base(node)
         {
