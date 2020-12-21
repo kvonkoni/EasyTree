@@ -19,15 +19,31 @@ namespace EasyTree.Iterators
         {
             var stack = new Stack<Node>();
             var outputStack = new Stack<Node>();
-            
-            stack.Push(node);
-            while (stack.Count > 0)
+
+            if (includeRoot)
             {
-                var currentNode = stack.Pop();
-                outputStack.Push(currentNode);
-                for (int i=0; i < currentNode.Children.Count; i++)
+                stack.Push(node);
+                while (stack.Count > 0)
                 {
-                    stack.Push(currentNode.Children[i]);
+                    var currentNode = stack.Pop();
+                    outputStack.Push(currentNode);
+                    
+                    for (int i = 0; i < currentNode.Children.Count; i++)
+                        stack.Push(currentNode.Children[i]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < node.Children.Count; i++)
+                    stack.Push(node.Children[i]);
+                
+                while (stack.Count > 0)
+                {
+                    var currentNode = stack.Pop();
+                    outputStack.Push(currentNode);
+                    
+                    for (int i = 0; i < currentNode.Children.Count; i++)
+                        stack.Push(currentNode.Children[i]);
                 }
             }
 
@@ -39,14 +55,31 @@ namespace EasyTree.Iterators
         {
             var stack = new Stack<Node>();
             var outputStack = new Stack<Node>();
-            stack.Push(node);
-            while (stack.Count > 0)
+
+            if (includeRoot)
             {
-                var currentNode = stack.Pop();
-                outputStack.Push(currentNode);
-                for (int i = 0; i < currentNode.Children.Count; i++)
+                stack.Push(node);
+                while (stack.Count > 0)
                 {
-                    stack.Push(currentNode.Children[i]);
+                    var currentNode = stack.Pop();
+                    outputStack.Push(currentNode);
+                    
+                    for (int i = 0; i < currentNode.Children.Count; i++)
+                        stack.Push(currentNode.Children[i]);
+                }
+            }
+            else
+            {
+                for (int i = 0; i < node.Children.Count; i++)
+                    stack.Push(node.Children[i]);
+
+                while (stack.Count > 0)
+                {
+                    var currentNode = stack.Pop();
+                    outputStack.Push(currentNode);
+
+                    for (int i = 0; i < currentNode.Children.Count; i++)
+                        stack.Push(currentNode.Children[i]);
                 }
             }
 
