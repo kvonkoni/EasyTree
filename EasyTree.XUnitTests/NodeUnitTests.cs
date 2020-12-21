@@ -56,6 +56,28 @@ namespace EasyTree.XUnitTests
         }
 
         [Fact]
+        public void Test_GetDescendants_ValidTree_DescendantsCorrect()
+        {
+            var root = new Node();
+            var childA = new Node();
+            var childAchildA = new Node();
+            var childAchildB = new Node();
+            var childBchildA = new Node();
+
+            root.AddChild(childA);
+            childA.AddChild(childAchildA);
+            childA.AddChild(childAchildB);
+            childAchildB.AddChild(childBchildA);
+
+            // Making sure each node's set of descendants is correct
+            Assert.True(new HashSet<Node>() { childA, childAchildA, childAchildB, childBchildA }.SetEquals(root.GetDescendants()));
+            Assert.True(new HashSet<Node>() { childAchildA, childAchildB, childBchildA }.SetEquals(childA.GetDescendants()));
+            Assert.Empty(childAchildA.GetDescendants());
+            Assert.True(new HashSet<Node>() { childBchildA }.SetEquals(childAchildB.GetDescendants()));
+            Assert.Empty(childBchildA.GetDescendants());
+        }
+
+        [Fact]
         public void Test_CombineTwoTrees_ValidSubTrees_RootLeafDescendantPathPropertiesCorrect()
         {
             var tree1 = new Node();
