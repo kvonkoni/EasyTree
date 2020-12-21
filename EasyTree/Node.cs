@@ -84,6 +84,7 @@ namespace EasyTree
         /// Adds a child node to the end of the list of children.
         /// </summary>
         /// <param name="child"></param>
+        /// <exception cref="InvalidTreeException">Thrown when the operation would result in an invalid tree structure.</exception>
         public void AddChild(Node child)
         {
             if (path.Contains(child))
@@ -111,6 +112,7 @@ namespace EasyTree
         /// Removes a child node from the list of children.
         /// </summary>
         /// <param name="child"></param>
+        /// <exception cref="NodeException">Thrown when the node is not in the children list.</exception>
         public void RemoveChild(Node child)
         {
             if (!children.Contains(child))
