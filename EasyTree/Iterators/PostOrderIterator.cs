@@ -5,20 +5,21 @@ namespace EasyTree.Iterators
 {
     internal class PostOrderIterator : IteratorBase, IEnumerable<Node>
     {
-        public PostOrderIterator(Node node) : base(node)
+        public PostOrderIterator(Node node, bool includeRoot = true) : base(node)
         {
-            PostOrder(_node);
+            PostOrder(_node, includeRoot);
         }
 
-        public PostOrderIterator(Node node, PerformFunction function) : base(node)
+        public PostOrderIterator(Node node, PerformFunction function, bool includeRoot = true) : base(node)
         {
-            PostOrder(_node, function);
+            PostOrder(_node, function, includeRoot);
         }
 
-        private void PostOrder(Node node)
+        private void PostOrder(Node node, bool includeRoot)
         {
             var stack = new Stack<Node>();
             var outputStack = new Stack<Node>();
+            
             stack.Push(node);
             while (stack.Count > 0)
             {
@@ -31,12 +32,10 @@ namespace EasyTree.Iterators
             }
 
             while (outputStack.Count > 0)
-            {
                 _nodelist.Add(outputStack.Pop());
-            }
         }
 
-        private void PostOrder(Node node, PerformFunction function)
+        private void PostOrder(Node node, PerformFunction function, bool includeRoot)
         {
             var stack = new Stack<Node>();
             var outputStack = new Stack<Node>();

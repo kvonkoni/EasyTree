@@ -10,9 +10,9 @@ namespace EasyTree.Iterators
             LevelOrder(_node, includeRoot);
         }
 
-        public LevelOrderIterator(Node node, bool includeRoot = true, PerformFunction function) : base(node)
+        public LevelOrderIterator(Node node, PerformFunction function, bool includeRoot = true) : base(node)
         {
-            LevelOrder(_node, includeRoot, function);
+            LevelOrder(_node, function, includeRoot);
         }
 
         private void LevelOrder(Node node, bool includeRoot)
@@ -33,7 +33,7 @@ namespace EasyTree.Iterators
             }
         }
 
-        private void LevelOrder(Node node, bool includeRoot, PerformFunction function)
+        private void LevelOrder(Node node, PerformFunction function, bool includeRoot)
         {
             var queue = new Queue<Node>();
             

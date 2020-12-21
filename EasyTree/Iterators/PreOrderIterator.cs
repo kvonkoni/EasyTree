@@ -10,9 +10,9 @@ namespace EasyTree.Iterators
             PreOrder(_node, includeRoot);
         }
 
-        public PreOrderIterator(Node node, bool includeRoot = true, PerformFunction function) : base(node)
+        public PreOrderIterator(Node node, PerformFunction function, bool includeRoot = true) : base(node)
         {
-            PreOrder(_node, includeRoot, function);
+            PreOrder(_node, function, includeRoot);
         }
 
         private void PreOrder(Node node, bool includeRoot)
@@ -51,7 +51,7 @@ namespace EasyTree.Iterators
             }
         }
 
-        private void PreOrder(Node node, bool includeRoot, PerformFunction function)
+        private void PreOrder(Node node, PerformFunction function, bool includeRoot)
         {
             var stack = new Stack<Node>();
 
