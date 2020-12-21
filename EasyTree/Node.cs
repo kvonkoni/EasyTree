@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using EasyTree.Iterators;
 
@@ -204,6 +205,22 @@ namespace EasyTree
         public void RemoveParent()
         {
             Parent.RemoveChild(this);
+        }
+
+        /// <summary>
+        /// Returns a read-only collection of all the current node's descendants.
+        /// </summary>
+        public IReadOnlyCollection<Node> GetDescendants()
+        {
+            return Enumerable.ToArray(GetPreOrderIterator());
+        }
+
+        /// <summary>
+        /// Returns a read-only collection of all the current node's leaves.
+        /// </summary>
+        public IReadOnlyCollection<Node> GetLeaves()
+        {
+            return Enumerable.ToList(GetPreOrderIterator()).FindAll(x => x.IsLeaf);
         }
 
         /// <summary>
