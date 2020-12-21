@@ -18,16 +18,16 @@ You can construct a tree by creating each node and passing in its parent as para
 
 ```cs
 // Adds a child node to an existing node
-void AddChild(Node child)
+void AddChild(Node child) {...}
 
 // Removes a child node
-void RemoveChild(Node child)
+void RemoveChild(Node child) {...}
 
 // Adds a parent to an existing node
-void AddParent(Node parent)
+void AddParent(Node parent) {...}
 
 // Removes a parent and makes the node a root
-void RemoveParent(Node parent)
+void RemoveParent(Node parent) {...}
 ```
 
 ### Properties
@@ -84,10 +84,10 @@ In addition to the methods above for creating and iterating through a tree, the 
 
 ```cs
 // Gets a collection of the descendants of the current node.
-IReadOnlyCollection<Node> GetDescendants()
+IReadOnlyCollection<Node> GetDescendants() {...}
 
 // Gets a collection of the tree's leaves, with the current node as root.
-IReadOnlyCollection<Node> GetLeaves()
+IReadOnlyCollection<Node> GetLeaves() {...}
 ```
 
 ## Usage
