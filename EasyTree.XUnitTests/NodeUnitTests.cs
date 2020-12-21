@@ -10,42 +10,49 @@ namespace EasyTree.XUnitTests
         {
             var root = new Node();
             var childA = new Node();
-            var childB = new Node();
-            var childC = new Node();
+            var childAchildA = new Node();
+            var childAchildB = new Node();
+            var childBchildA = new Node();
 
             root.AddChild(childA);
-            childA.AddChild(childB);
-            childB.AddChild(childC);
+            childA.AddChild(childAchildA);
+            childA.AddChild(childAchildB);
+            childAchildB.AddChild(childBchildA);
 
             // Making sure only 'root' is a root
             Assert.True(root.IsRoot);
             Assert.False(childA.IsRoot);
-            Assert.False(childB.IsRoot);
-            Assert.False(childC.IsRoot);
+            Assert.False(childAchildA.IsRoot);
+            Assert.False(childAchildB.IsRoot);
+            Assert.False(childBchildA.IsRoot);
 
             // Making sure each node's root is 'root'
             Assert.Equal(root, root.Root);
             Assert.Equal(root, childA.Root);
-            Assert.Equal(root, childB.Root);
-            Assert.Equal(root, childC.Root);
+            Assert.Equal(root, childAchildA.Root);
+            Assert.Equal(root, childAchildB.Root);
+            Assert.Equal(root, childBchildA.Root);
 
-            // Making sure only 'childC' is a leaf
+            // Making sure only 'childAchildA' and 'childC' are leaves
             Assert.False(root.IsLeaf);
             Assert.False(childA.IsLeaf);
-            Assert.False(childB.IsLeaf);
-            Assert.True(childC.IsLeaf);
+            Assert.True(childAchildA.IsLeaf);
+            Assert.False(childAchildB.IsLeaf);
+            Assert.True(childBchildA.IsLeaf);
 
             // Making sure each node's set of descendants is correct
-            Assert.True(new HashSet<Node>() { childA, childB, childC }.SetEquals(root.Descendants));
-            Assert.True(new HashSet<Node>() { childB, childC }.SetEquals(childA.Descendants));
-            Assert.True(new HashSet<Node>() { childC }.SetEquals(childB.Descendants));
-            Assert.Empty(childC.Descendants);
+            Assert.True(new HashSet<Node>() { childA, childAchildA, childAchildB, childBchildA }.SetEquals(root.Descendants));
+            Assert.True(new HashSet<Node>() { childAchildA, childAchildB, childBchildA }.SetEquals(childA.Descendants));
+            Assert.Empty(childAchildA.Descendants);
+            Assert.True(new HashSet<Node>() { childBchildA }.SetEquals(childAchildB.Descendants));
+            Assert.Empty(childBchildA.Descendants);
 
             // Making sure each node's path list is correct
-            Assert.Equal(new List<Node>() { root }, root.Path);
-            Assert.Equal(new List<Node>() { root, childA }, childA.Path);
-            Assert.Equal(new List<Node>() { root, childA, childB }, childB.Path);
-            Assert.Equal(new List<Node>() { root, childA, childB, childC }, childC.Path);
+            Assert.Equal(new List<Node> { root }, root.Path);
+            Assert.Equal(new List<Node> { root, childA }, childA.Path);
+            Assert.Equal(new List<Node> { root, childA, childAchildA }, childAchildA.Path);
+            Assert.Equal(new List<Node> { root, childA, childAchildB }, childAchildB.Path);
+            Assert.Equal(new List<Node> { root, childA, childAchildB, childBchildA }, childBchildA.Path);
         }
 
         [Fact]
